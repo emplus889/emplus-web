@@ -18,3 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// go to passport control panel
+Route::get('/passport', function () {
+    return view('passport');
+});
