@@ -13,9 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 //laravel passport api test purpose
-Route::get('/login', 'UserController@login');
+Route::post('login', 'UserController@login');
+Route::post('register', 'UserController@register');
+Route::group(['middleware' => 'auth:api'], function(){
+    Route::post('details', 'UserController@details');
+});
