@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'mobile', 'password',
     ];
 
     /**
@@ -27,4 +27,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function Users_profile()
+    {
+        return $this->belongsTo('App\Users_profile','id_users','id')->select('id_users','foto_profile');
+    }
+
+    public function Wallet()
+    {
+        return $this->belongsTo('App\Wallet','id_users','id')->select('id_users','balance');
+    }
 }
