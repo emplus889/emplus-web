@@ -23,5 +23,9 @@ Route::post('register', 'UserController@register');
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('details', 'UserController@details');
     Route::post('getFotoProfil/{id}', 'UserProfileController@getFotoProfil');
-    Route::post('getBalance/{id}', 'WalletController@getBalance');
+
+    //wallet
+    Route::get('getBalance/{id}', 'WalletController@getBalance');
+    Route::post('checkWalletNo', 'WalletController@checkWalletNo');
+    Route::post('transferBalance', 'WalletController@transferBalance');
 });

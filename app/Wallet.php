@@ -12,6 +12,11 @@ class Wallet extends Model
      * @var array
      */
     protected $fillable = [
-        'id_users', 'balance',
+        'id_users', 'wallet_no', 'balance',
     ];
+
+    public function Wallet()
+    {
+        return $this->hasOne('App\Users','id','id_users')->select('id','name');
+    }
 }
