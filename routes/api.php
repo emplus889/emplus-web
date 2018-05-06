@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     //wallet
     Route::get('getBalance/{id}', 'WalletController@getBalance');
+    Route::post('storeWallet', 'WalletController@storeWallet');
     Route::post('checkWalletNo', 'WalletController@checkWalletNo');
     Route::post('transferBalance', 'WalletController@transferBalance');
 });

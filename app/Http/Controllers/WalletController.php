@@ -20,6 +20,20 @@ class WalletController extends Controller
       ]);
   }
 
+  public function storeWallet(Request $request)
+  {
+    $this->validate($request,LaporanCu::$rules);
+
+    $kelas = User_profile::create($request->all());
+  
+    return response()
+        ->json([
+            'saved' => true,
+            'message' => 'Wallet berhasil dibuat',
+            'id' => $kelas->id
+        ]);  
+  }
+
   public function checkWalletNo(Request $request)
   {
     $wallet_no = $request->wallet_no;
