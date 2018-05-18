@@ -3,6 +3,7 @@ import Vue from 'vue';
 import Vuetify from 'vuetify'
 import VueRouter from 'vue-router';
 import Axios from 'axios';
+import moment from 'moment';
 import userRoutes from './routes/user';
 import Main from './main.vue'; //main placeholder for entire vue app render
 import 'vuetify/dist/vuetify.min.css'
@@ -11,9 +12,10 @@ import 'vuetify/dist/vuetify.min.css'
 Vue.use(VueRouter); // handling routing on vue
 Vue.use(Vuetify); // handling UI
 
+window.moment = moment; // handling date formating
+window.axios = Axios; // handing http post
+
 // handling laravel csrf token validation and headers
-window.moment = moment;
-window.axios = Axios;
 axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest',
 };
@@ -30,12 +32,11 @@ const router = new VueRouter({
 	base: '/app',
     mode: 'history',
     routes: [
-        ...userLogin
+        ...userRoutes
     ]
 });
 
 const app = new Vue({
-    store,
     router,
     render: h => h(Main)
 }).$mount('#app');
