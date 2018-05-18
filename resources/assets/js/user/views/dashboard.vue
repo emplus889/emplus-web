@@ -1,6 +1,6 @@
 <template>
   <div>
-    this is header
+    this is dashboard
   </div>
 </template>
 
