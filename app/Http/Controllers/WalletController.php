@@ -95,8 +95,7 @@ class WalletController extends Controller
     return response()
         ->json([
             'saved' => true,
-            'message' => 'transfer berhasil dilakukan',
-            'kelas' => $origin
+            'message' => 'transfer berhasil dilakukan'
         ]);    
   }
 }

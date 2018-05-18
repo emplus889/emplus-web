@@ -11,23 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-// go to passport control panel
-Route::get('/passport', function () {
-    return view('passport');
-});
-
-Route::get('/form', function () {
-    return view('form');
-});
-
-Route::post('/simpan', function () {
-    return 'hello';
-})->name('simpan');
+// route to vue app
+Route::get('/app/{vue?}', function () {
+    return view('app');
+})->where('vue', '^(?!.*api).*$[\/\w\.-]*');

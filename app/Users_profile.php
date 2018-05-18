@@ -12,6 +12,6 @@ class Users_profile extends Model
      * @var array
      */
     protected $fillable = [
-        'id_users','foto_profil', 'foto_ktp',
+        'id_users','id_region', 'profile_pic','identity_pic','address','gender'
     ];
 }
