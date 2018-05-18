@@ -12,16 +12,12 @@ class Transaction extends Model
      * @var array
      */
     protected $fillable = [
-        'no_wallet_origin', 'no_wallet_destination', 'type', 'note', 'debit', 'credit'
+        'no_trans', 'no_wallet', 'type', 'note', 'amount'
     ];
 
-    public function Origin()
+    public function Wallet()
     {
-        return $this->hasOne('App\Wallet','wallet_no','no_wallet_origin')->select('id','id_users','wallet_no','balance');
+        return $this->hasOne('App\Wallet','wallet_no','no_wallet')->select('id','id_users','wallet_no','balance');
     }
 
-    public function Destination()
-    {
-        return $this->hasOne('App\Wallet','wallet_no','no_wallet_destination')->select('id','id_users','wallet_no','balance');
-    }
 }

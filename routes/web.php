@@ -23,3 +23,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/passport', function () {
     return view('passport');
 });
+
+Route::get('/form', function () {
+    return view('form');
+});
+
+Route::post('/simpan', function () {
+    return 'hello';
+})->name('simpan');

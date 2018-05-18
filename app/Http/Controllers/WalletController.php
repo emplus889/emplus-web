@@ -56,7 +56,7 @@ class WalletController extends Controller
     $kelas->balance = $kelas->balance + $request->amount;
     $kelas->save();
 
-    TransactionController::store($request->$origin_no, 'CREDIT','Top Up Saldo', $balance);
+    TransactionController::store($request->$origin_no, 'DEBIT','Top Up Saldo', $balance);
 
     return response()
       ->json([
@@ -80,7 +80,7 @@ class WalletController extends Controller
     ]);
     
     // store new transaction
-    TransactionController::store($request->$origin_no, 'CREDIT', $request->note, $balance);
+    $no_trans = TransactionController::store('',$request->$origin_no, 'CREDIT', $request->note, $balance);
 
     // update destination wallet balance
     $destination = Wallet::where('wallet_no',$destination_no);
@@ -90,7 +90,7 @@ class WalletController extends Controller
     ]);
 
     // store new transaction
-    TransactionController::store($request->$destination_no, 'DEBIT', $request->note, $balance);
+    TransactionController::store($no_trans,$request->$destination_no, 'DEBIT', $request->note, $balance);
     
     return response()
         ->json([

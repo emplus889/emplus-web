@@ -10,11 +10,15 @@ use Response;
 
 class TransactionController extends Controller
 {
-  public static function store($no_wallet,$type,$note,$amount)
+  public static function store($no_trans,$no_wallet,$type,$note,$amount)
   {
     $kelas = new Transaction;
 
-    $kelas->no_trans = $this->generate_no_trans($no_wallet);
+    if($no_trans == ''){
+      $no_trans = $this->generate_no_trans($no_wallet);
+    }
+    
+    $kelas->no_trans = $no_trans;
     $kelas->no_wallet = $no_wallet;
     $kelas->type = $type;
     $kelas->note = $note;
@@ -22,6 +26,7 @@ class TransactionController extends Controller
     
     $kelas->save();
 
+    return $no_trans;
   }
 
   private function generate_no_trans($no_wallet)

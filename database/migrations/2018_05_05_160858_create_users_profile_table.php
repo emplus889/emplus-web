@@ -16,8 +16,11 @@ class CreateUsersProfileTable extends Migration
         Schema::create('users_profile', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_users');
-            $table->text('foto_profil');
-            $table->text('foto_ktp');
+            $table->integer('id_region');// TODO: world region
+            $table->text('profil_pic');
+            $table->text('identity_pic');
+            $table->text('address');
+            $table->bool('gender');
             $table->timestamps();
         });
     }
