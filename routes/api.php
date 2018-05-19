@@ -8,6 +8,7 @@ Route::post('/login', 'AuthController@login');
 Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function(){
     
     // auth
+    Route::get('/getUser', 'AuthController@getUser');
     Route::post('/logout', 'AuthController@logout');
 
     // user

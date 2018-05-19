@@ -85,6 +85,12 @@ class AuthController extends Controller
     ]);
 	}
 
+	// check user
+	public function getUser()
+	{
+		return auth()->user();
+	}
+
 	// logout user
 	public function logout()
 	{

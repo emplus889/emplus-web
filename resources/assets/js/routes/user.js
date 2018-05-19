@@ -6,10 +6,15 @@ import userDashboard from '../user/views/dashboard.vue';
 //all routes
 const routes = [
   // login
-  { path: '/user/login',name: 'userLogin', components: { default: userLogin } },
+  { path: '/user/login',
+    name: 'userLogin', 
+    components: { default: userLogin } },
   
   // dashboard
-	{ path: '/user',name: 'userDashboard', components: { default: userDashboard,'header': userHeader  } },
+  { path: '/user',
+    name: 'userDashboard', 
+    components: { default: userDashboard,'header': userHeader  },
+    meta: { middlewareAuth: true } },
 ]
 
 //export routes
