@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Hash;
 use Illuminate\Http\Request;
+use App\User;
 
 class AuthController extends Controller
 {
@@ -23,8 +25,8 @@ class AuthController extends Controller
 			$input = $request->all(); 
 			$input['password'] = bcrypt($input['password']); 
 			$user = User::create($input); 
-			$success['token'] =  $user->createToken('MyApp')-> accessToken; 
-			$success['name'] =  $user->name;
+			// $success['token'] =  $user->createToken('MyApp')-> accessToken; 
+			// $success['name'] =  $user->name;
 
 			return response()->json(['status' => 201]);
 	}
@@ -32,17 +34,55 @@ class AuthController extends Controller
 	// login user
 	public function login()
 	{
-		// TODO: hide client_id and client_secret
-		$data = [
-				'grant_type' => 'password',
-				'client_id' => env('CLIENT_ID'),
-				'client_secret' => env('CLIENT_SECRET'),
-				'username' => request('username'),
-				'password' => request('password'),
-		];
+		// Check if a user with the specified email exists
+    $user = User::whereEmail(request('username'))->first();
 
-		$request = Request::create('/oauth/token', 'POST', $data);
-		return app()->handle($request);
+    if (!$user) {
+        return response()->json([
+            'message' => 'Wrong email or password',
+            'status' => 422
+        ], 422);
+    }
+
+    // If a user with the email was found - check if the specified password
+    // belongs to this user
+    if (!Hash::check(request('password'), $user->password)) {
+        return response()->json([
+            'message' => 'Wrong email or password',
+            'status' => 422
+        ], 422);
+    }
+
+    // Send an internal API request to get an access token
+    $data = [
+        'grant_type' => 'password',
+        'client_id' => env('CLIENT_ID'),
+				'client_secret' => env('CLIENT_SECRET'),
+        'username' => request('username'),
+        'password' => request('password'),
+    ];
+
+    $request = Request::create('/oauth/token', 'POST', $data);
+
+    $response = app()->handle($request);
+
+    // Check if the request was successful
+    if ($response->getStatusCode() != 200) {
+        return response()->json([
+            'message' => 'Wrong email or password',
+            'status' => 422
+        ], 422);
+    }
+
+    // Get the data from the response
+    $data = json_decode($response->getContent());
+
+    // Format the final response in a desirable format
+    return response()->json([
+        'token' => $data->access_token,
+        'user' => $user,
+        'status' => 200
+    ]);
 	}
 
 	// logout user

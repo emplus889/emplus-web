@@ -4,7 +4,8 @@
       <v-container fluid fill-height>
         <v-layout align-center justify-center>
           <v-flex xs12 sm8 md4>
-
+            
+            <!-- form -->
             <form @submit.prevent="login()">
             <v-card class="elevation-12">
               <!-- header -->
@@ -14,15 +15,15 @@
               <!-- body -->
               <v-card-text>
                 
-                  <!-- email -->
+                  <!-- username -->
                   <v-text-field 
                     prepend-icon="mail" 
-                    name="email" 
-                    label="Email" 
-                    id="email"
-                    type="email"
+                    name="username" 
+                    label="E-mail" 
+                    id="username"
+                    type="username"
                     class="input-group--focused"
-                    v-model="email"
+                    v-model="username"
                     ></v-text-field>
 
                   <!-- password -->
@@ -35,11 +36,13 @@
                     v-model="password"
                     ></v-text-field>
               </v-card-text>
+
               <!-- button -->
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" type="submit">Login</v-btn>
               </v-card-actions>
+
             </v-card>
             </form>
              
@@ -54,22 +57,25 @@
 export default {
   data(){
     return {
-      email: '',
+      username: '',
       password: ''
     }
   },
   methods: {
     login(){
-      axios.post('/login', {
-          email: this.email,
-          password: this.password
-        })
-        .then(response => {
+      let data = {
+        username: this.username,
+        password: this.password
+      };
+
+      axios.post('/api/login', data)
+        .then(({data}) => {
+          auth.login(data.token, data.user);
           this.$router.push('/user');
-        }).catch(error => {
-          console.log(error.response)
+        })  
+        .catch(({response}) => {                    
+            alert(response.data.message);
         });
-      console.log('yo')  
     },
   }
 }

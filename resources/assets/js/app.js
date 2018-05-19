@@ -5,6 +5,7 @@ import Vuetify from 'vuetify'
 import VueRouter from 'vue-router';
 import Axios from 'axios';
 import moment from 'moment';
+import auth from './auth.js';
 import store from './store';
 import userRoutes from './routes/user';
 import Main from './main.vue'; //main placeholder for entire vue app render
@@ -14,8 +15,10 @@ import 'vuetify/dist/vuetify.min.css'
 Vue.use(VueRouter); // handling routing on vue
 Vue.use(Vuetify); // handling UI
 
+window.auth = auth; // handling authentication
 window.moment = moment; // handling date formating
-window.axios = Axios; // handing http post
+window.axios = Axios; // handling http post
+window.Event = new Vue; // handling vue event
 
 // handling laravel csrf token validation and headers
 axios.defaults.headers.common = {
@@ -38,19 +41,7 @@ const router = new VueRouter({
     ]
 });
 
-// recheck user every route request
-router.beforeEach((to, from, next) => {
-    window.scrollTo(0, 0);
-    if (to.fullPath !== "/user/login") {
-        axios.get('/api/v1/userId').then(response => {
-            next(vm => vm.$store.dispatch('user/profile'));
-        }).catch(error => {
-            router.push('/user/login');
-        })
-    }else{
-        next(vm => vm.$store.dispatch('user/profile'));
-    }
-});
+
 
 const app = new Vue({
     store,
