@@ -29396,45 +29396,55 @@ window.auth = new __WEBPACK_IMPORTED_MODULE_7__auth_js__["a" /* default */](); /
 
 // handling laravel csrf token validation and headers
 axios.defaults.headers.common = {
-    'X-Requested-With': 'XMLHttpRequest'
+		'X-Requested-With': 'XMLHttpRequest'
 };
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+		window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+		console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 // handling basic url route 
 var router = new __WEBPACK_IMPORTED_MODULE_3_vue_router__["a" /* default */]({
-    base: '/app',
-    mode: 'history',
-    routes: [].concat(_toConsumableArray(__WEBPACK_IMPORTED_MODULE_9__routes_user__["a" /* default */]))
+		base: '/app',
+		mode: 'history',
+		routes: [].concat(_toConsumableArray(__WEBPACK_IMPORTED_MODULE_9__routes_user__["a" /* default */]))
 });
 
 router.beforeEach(function (to, from, next) {
-    if (to.matched.some(function (record) {
-        return record.meta.middlewareAuth;
-    })) {
-        if (!auth.check()) {
-            next({
-                path: '/user/login',
-                query: { redirect: to.fullPath }
-            });
-            return;
-        }
-    }
+		if (to.matched.some(function (record) {
+				return record.meta.middlewareAuth;
+		})) {
+				if (!auth.check()) {
+						next({
+								path: '/user/login',
+								query: { redirect: to.fullPath }
+						});
+						return;
+				}
+		}
+		if (to.matched.some(function (record) {
+				return record.meta.userLogin;
+		})) {
+				if (auth.check()) {
+						next({
+								path: '/user'
+						});
+						return;
+				}
+		}
 
-    next();
+		next();
 });
 
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-    store: __WEBPACK_IMPORTED_MODULE_8__store__["a" /* default */],
-    router: router,
-    render: function render(h) {
-        return h(__WEBPACK_IMPORTED_MODULE_10__main_vue___default.a);
-    }
+		store: __WEBPACK_IMPORTED_MODULE_8__store__["a" /* default */],
+		router: router,
+		render: function render(h) {
+				return h(__WEBPACK_IMPORTED_MODULE_10__main_vue___default.a);
+		}
 }).$mount('#app');
 
 /***/ }),
@@ -33618,7 +33628,6 @@ var Auth = function () {
 
       this.token = '';
       this.user = '';
-      this.$router.push('/user/login');
     }
   }]);
 
@@ -33832,7 +33841,8 @@ var routes = [
 // login
 { path: '/user/login',
   name: 'userLogin',
-  components: { default: __WEBPACK_IMPORTED_MODULE_2__user_views_login_vue___default.a } },
+  components: { default: __WEBPACK_IMPORTED_MODULE_2__user_views_login_vue___default.a },
+  meta: { userLogin: true } },
 
 // dashboard
 { path: '/user',
@@ -34043,21 +34053,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      authenticated: auth.check(),
       username: '',
       password: ''
     };
   },
-  mounted: function mounted() {
-    var _this = this;
-
-    Event.$on('userLoggedIn', function () {
-      _this.$router.push('/user');
-    });
-  },
+  mounted: function mounted() {},
 
   methods: {
     login: function login() {
-      var _this2 = this;
+      var _this = this;
 
       var data = {
         username: this.username,
@@ -34068,7 +34073,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var data = _ref.data;
 
         auth.login(data.token, data.user);
-        _this2.$router.push('/user');
+        _this.$router.push('/user');
       }).catch(function (_ref2) {
         var response = _ref2.response;
 
@@ -57727,9 +57732,7 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c("AppFooter")
+      )
     ],
     1
   )
@@ -59393,7 +59396,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'c-footer'
@@ -59418,11 +59420,6 @@ var staticRenderFns = [
       _c("span", [
         _c("a", { attrs: { href: "#" } }, [_vm._v("EMPLUS")]),
         _vm._v(" © 2018 startup.")
-      ]),
-      _vm._v(" "),
-      _c("span", { staticClass: "ml-auto" }, [
-        _vm._v("Powered by "),
-        _c("a", { attrs: { href: "http://coreui.io" } }, [_vm._v("CoreUI")])
       ])
     ])
   }
@@ -59618,19 +59615,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'header-dropdown',
   data: function data() {
     return { itemsCount: 42 };
+  },
+  methods: {
+    logout: function logout() {
+      auth.logout();
+      this.$router.push('/user/login');
+    }
   }
 });
 
@@ -59662,60 +59657,6 @@ var render = function() {
         [_c("strong", [_vm._v("Account")])]
       ),
       _vm._v(" "),
-      _c(
-        "b-dropdown-item",
-        [
-          _c("i", { staticClass: "fa fa-bell-o" }),
-          _vm._v(" Updates"),
-          _c("b-badge", { attrs: { variant: "info" } }, [
-            _vm._v(_vm._s(_vm.itemsCount))
-          ])
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "b-dropdown-item",
-        [
-          _c("i", { staticClass: "fa fa-envelope-o" }),
-          _vm._v(" Messages"),
-          _c("b-badge", { attrs: { variant: "success" } }, [
-            _vm._v(_vm._s(_vm.itemsCount))
-          ])
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "b-dropdown-item",
-        [
-          _c("i", { staticClass: "fa fa-tasks" }),
-          _vm._v(" Tasks"),
-          _c("b-badge", { attrs: { variant: "danger" } }, [
-            _vm._v(_vm._s(_vm.itemsCount))
-          ])
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "b-dropdown-item",
-        [
-          _c("i", { staticClass: "fa fa-comments" }),
-          _vm._v(" Comments"),
-          _c("b-badge", { attrs: { variant: "warning" } }, [
-            _vm._v(_vm._s(_vm.itemsCount))
-          ])
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "b-dropdown-header",
-        { staticClass: "text-center", attrs: { tag: "div" } },
-        [_c("strong", [_vm._v("Settings")])]
-      ),
-      _vm._v(" "),
       _c("b-dropdown-item", [
         _c("i", { staticClass: "fa fa-user" }),
         _vm._v(" Profile")
@@ -59726,41 +59667,20 @@ var render = function() {
         _vm._v(" Settings")
       ]),
       _vm._v(" "),
-      _c(
-        "b-dropdown-item",
-        [
-          _c("i", { staticClass: "fa fa-usd" }),
-          _vm._v(" Payments"),
-          _c("b-badge", { attrs: { variant: "secondary" } }, [
-            _vm._v(_vm._s(_vm.itemsCount))
-          ])
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "b-dropdown-item",
-        [
-          _c("i", { staticClass: "fa fa-file" }),
-          _vm._v(" Projects"),
-          _c("b-badge", { attrs: { variant: "primary" } }, [
-            _vm._v(_vm._s(_vm.itemsCount))
-          ])
-        ],
-        1
-      ),
-      _vm._v(" "),
       _c("b-dropdown-divider"),
       _vm._v(" "),
-      _c("b-dropdown-item", [
-        _c("i", { staticClass: "fa fa-shield" }),
-        _vm._v(" Lock Account")
-      ]),
-      _vm._v(" "),
-      _c("b-dropdown-item", [
-        _c("i", { staticClass: "fa fa-lock" }),
-        _vm._v(" Logout")
-      ])
+      _c(
+        "b-dropdown-item",
+        {
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              _vm.logout()
+            }
+          }
+        },
+        [_c("i", { staticClass: "fa fa-lock" }), _vm._v(" Logout")]
+      )
     ],
     2
   )

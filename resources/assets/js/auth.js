@@ -43,7 +43,6 @@ class Auth {
 
     this.token = '';
     this.user = '';
-    this.$router.push('/user/login');
   }
 }
 

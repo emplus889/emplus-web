@@ -46,14 +46,12 @@
 export default {
   data(){
     return {
+      authenticated: auth.check(),
       username: '',
       password: ''
     }
   },
   mounted() {
-    Event.$on('userLoggedIn', () => {
-        this.$router.push('/user');
-    });
   },
   methods: {
     login(){

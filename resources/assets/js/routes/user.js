@@ -9,7 +9,8 @@ const routes = [
   // login
   { path: '/user/login',
     name: 'userLogin', 
-    components: { default: userLogin } },
+    components: { default: userLogin },
+    meta: { userLogin: true } },
   
   // dashboard
   { path: '/user',
