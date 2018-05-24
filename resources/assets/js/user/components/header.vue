@@ -13,10 +13,10 @@ export default {
     }
   },
   mounted() {
-      Event.$on('userLoggedIn', () => {
-          this.authenticated = true;
-          this.user = auth.user;
-      });
+    Event.$on('userLoggedIn', () => {
+        this.authenticated = true;
+        this.user = auth.user;
+    });
   },
   methods: {
     

@@ -1,7 +1,7 @@
 // all package/component used are imported here
 import Vue from 'vue';
+import BootstrapVue from 'bootstrap-vue'; // bootstrap ui framework
 import Vuex from 'vuex';
-import Vuetify from 'vuetify'
 import VueRouter from 'vue-router';
 import Axios from 'axios';
 import moment from 'moment';
@@ -10,19 +10,16 @@ import Auth from './auth.js';
 import store from './store';
 import userRoutes from './routes/user';
 import Main from './main.vue'; //main placeholder for entire vue app render
-import 'vuetify/dist/vuetify.min.css'
 
 // all package/component defined here
+Vue.use(BootstrapVue); // handing UI
 Vue.use(VueRouter); // handling routing on vue
-Vue.use(Vuetify); // handling UI
 
 window.moment = moment; // handling date formating
 window.axios = Axios; // handling http post
 window.Event = new Vue; // handling vue event
 window.api = new Api(); // handling axios api
 window.auth = new Auth(); // handling authentication
-
-
 
 // handling laravel csrf token validation and headers
 axios.defaults.headers.common = {
