@@ -2,6 +2,7 @@
 import full from '../containers/full.vue';
 import userHeader from '../user/components/header.vue';
 import userLogin from '../user/views/login.vue';
+import userRegister from '../user/views/register.vue';
 import userDashboard from '../user/views/dashboard.vue';
 
 //all routes
@@ -11,6 +12,12 @@ const routes = [
     name: 'userLogin', 
     components: { default: userLogin },
     meta: { userLogin: true } },
+  
+  // register
+  { path: '/user/register',
+    name: 'userRegister', 
+    components: { default: userRegister },
+    meta: { userLogin: true } },  
   
   // dashboard
   { path: '/user',

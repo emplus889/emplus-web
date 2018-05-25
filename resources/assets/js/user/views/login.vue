@@ -10,7 +10,7 @@
                 <p class="text-muted">Sign In to your account</p>
                 <b-input-group class="mb-3">
                   <b-input-group-prepend><b-input-group-text><i class="icon-user"></i></b-input-group-text></b-input-group-prepend>
-                  <input type="text" class="form-control" placeholder="Username" v-model="username">
+                  <input type="text" class="form-control" placeholder="Username" v-model="email">
                 </b-input-group>
                 <b-input-group class="mb-4">
                   <b-input-group-prepend><b-input-group-text><i class="icon-lock"></i></b-input-group-text></b-input-group-prepend>
@@ -30,8 +30,8 @@
               <b-card-body class="text-center">
                 <div>
                   <h2>Sign up</h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                  <b-button variant="primary" class="active mt-3">Register Now!</b-button>
+                  <p><b>Don't have an account yet?</b> then don't miss out the future of transaction by clicking register button, and get on the board with us</p>
+                  <b-link variant="primary" class="btn btn-warning mt-3" to="/user/register">Register Now!</b-link>
                 </div>
               </b-card-body>
             </b-card>
@@ -47,7 +47,7 @@ export default {
   data(){
     return {
       authenticated: auth.check(),
-      username: '',
+      email: '',
       password: ''
     }
   },
@@ -56,7 +56,7 @@ export default {
   methods: {
     login(){
       let data = {
-        username: this.username,
+        email: this.email,
         password: this.password
       };
 
