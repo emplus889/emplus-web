@@ -21,18 +21,15 @@ class WalletController extends Controller
       ]);
   }
 
-  public function createWallet(Request $request)
+  public static function createWallet($id_users)
   {
-    $this->validate($request,LaporanCu::$rules);
+    $kelas = new Wallet;
 
-    $kelas = User_profile::create($request->all());
-  
-    return response()
-      ->json([
-          'saved' => true,
-          'message' => 'Wallet berhasil dibuat',
-          'id' => $kelas->id
-      ]);  
+    $kelas->id_users = $id_users;
+    $kelas->balance = '0';
+
+    $kelas->save();
+    
   }
 
   public function checkWalletNo(Request $request)

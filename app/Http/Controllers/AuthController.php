@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Http\Controllers\WalletController;
 use Response;
 
 class AuthController extends Controller
@@ -30,6 +31,8 @@ class AuthController extends Controller
 		$input = $request->all(); 
 		$input['password'] = bcrypt($input['password']); 
 		$user = User::create($input); 
+
+		WalletController::createWallet($user->id);
 
 		// Send an internal API request to get an access token
     $data = [
