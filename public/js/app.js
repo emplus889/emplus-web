@@ -62237,13 +62237,37 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Wallet',
   data: function data() {
-    return {};
+    return {
+      tableFields: [{
+        key: 'no_trans',
+        label: 'No. Trans',
+        sortable: true
+      }, {
+        key: 'note',
+        sortable: true
+      }, {
+        key: 'type',
+        sortable: true
+      }, {
+        key: 'amount',
+        sortable: true
+      }]
+    };
   },
   created: function created() {
     if (this.profileStat == 'success') {
@@ -62300,6 +62324,7 @@ var render = function() {
         [
           _c(
             "b-col",
+            { attrs: { sm: "12", md: "12", lg: "12" } },
             [
               _c(
                 "b-card",
@@ -62322,6 +62347,28 @@ var render = function() {
                   _c("b-progress", {
                     staticClass: "progress-xs mt-3 mb-0",
                     attrs: { height: "{}", variant: "info", value: 0 }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "b-col",
+            { attrs: { sm: "12", md: "12", lg: "12" } },
+            [
+              _c(
+                "b-card",
+                { attrs: { header: "Transaction" } },
+                [
+                  _c("b-table", {
+                    attrs: {
+                      responsive: "sm",
+                      items: _vm.transaction,
+                      fields: _vm.tableFields
+                    }
                   })
                 ],
                 1

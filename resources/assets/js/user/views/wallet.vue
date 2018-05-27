@@ -1,7 +1,8 @@
 <template>
   <div class="animated fadeIn">
     <b-row>
-      <b-col>
+      <!-- wallet -->
+      <b-col sm="12" md="12" lg="12">
         <b-card class="text-white bg-primary">
           <div class="h1 text-right mb-4">
             <i class="icon-wallet"></i>
@@ -9,6 +10,14 @@
           <div class="h4 mb-0">{{ wallet.balance }}</div>
           <small class="text-uppercase font-weight-bold">Wallet: {{ wallet.no_wallet }}</small>
           <b-progress height={} class="progress-xs mt-3 mb-0" variant="info" :value="0"/>
+        </b-card>
+      </b-col>
+
+      <!-- transaction -->
+      <b-col sm="12" md="12" lg="12">
+        <b-card header="Transaction">
+          <b-table responsive="sm" :items="transaction" :fields="tableFields">
+          </b-table>
         </b-card>
       </b-col>
     </b-row>
@@ -22,6 +31,25 @@ export default {
   name: 'Wallet',
   data(){
     return {
+      tableFields: [
+        {
+          key: 'no_trans',
+          label: 'No. Trans',
+          sortable: true
+        },
+        {
+          key: 'note',
+          sortable: true
+        },
+        {
+          key: 'type',
+          sortable: true
+        },
+        {
+          key: 'amount',
+          sortable: true
+        },
+      ],
     }
   },
   created(){
