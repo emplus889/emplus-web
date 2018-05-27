@@ -35,12 +35,32 @@ class WalletController extends Controller
 
   public function checkWalletNo(Request $request)
   {
-    $wallet_no = $request->wallet_no;
+    $no_wallet_origin = $request->no_wallet_origin;
+    $no_wallet_destination = $request->no_wallet_destination;
+        
+    // check if no_wallet_origin not equal no_wallet_destination
+    if($no_wallet_origin == $no_wallet_destination){
+      return response()
+        ->json([
+            'status' => false,
+            'message' => 'Maaf tidak bisa melakukan transfer ke dompet sendiri'
+        ]);  
+    }
 
-    $table_data = Wallet::with('users')->where('wallet_no',$wallet_no)->select('id','id_user')->first();
+    $table_data = Wallet::with('user')->where('no_wallet',$no_wallet_destination)->select('id','id_users')->first();
+
+    // check if no_wallet_destination exist
+    if($table_data == null){
+      return response()
+        ->json([
+            'status' => false,
+            'message' => 'Maaf No. Dompet tidak ditemukan, mohon diperiksa lagi.'
+        ]);  
+    }
 
     return response()
       ->json([
+        'status' => true,
         'model' => $table_data
       ]);
   }
@@ -72,6 +92,16 @@ class WalletController extends Controller
 
     // update origin wallet balance
     $origin = Wallet::where('no_wallet',$no_wallet_origin)->first();
+
+    // check if origin wallet is not less than amount
+    if($origin->balance < $amount){
+      return response()
+        ->json([
+            'saved' => false,
+            'message' => 'Transfer gagal, saldo tidak cukup'
+        ]);  
+    }
+
     $origin_balance = $origin->balance - $amount;
     $origin->update([
         'balance' => $origin_balance
@@ -87,7 +117,7 @@ class WalletController extends Controller
         'balance' => $destination_balance
     ]);
 
-    // store new transaction
+    // store new transaction with same no_trans from transaction above
     TransactionController::store($no_trans,$no_wallet_destination, 'DEBIT', $request->note, $amount);
     
     return response()

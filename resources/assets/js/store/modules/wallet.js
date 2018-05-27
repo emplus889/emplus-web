@@ -57,12 +57,33 @@ export const wallet = {
             commit('setUpdate', response.data);
             commit('setUpdateStat', 'success');
           }else{
+            commit('setUpdate', response.data); 
             commit('setUpdateStat', 'fail');
           }
         })
         .catch(error => {
           commit('setUpdate', error.response);   
           commit('setUpdateStat', 'fail');
+        });
+    },
+
+
+    checkWalletNo( {commit, state, dispatch}, form ){
+      commit('setDataStat', 'loading');
+      
+      WalletAPI.checkWalletNo( form )
+        .then( function( response ){
+          if(response.data.status){
+            commit('setData', response.data.model);
+            commit('setDataStat', 'success');
+          }else{
+            commit('setData', response.data.message );
+            commit('setDataStat', 'fail');
+          } 
+        })
+        .catch( error => {
+          commit('setData', error.response);
+          commit('setDataStat', 'fail');
         });
     },
 

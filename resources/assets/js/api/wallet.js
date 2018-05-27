@@ -8,6 +8,10 @@ export default {
   },
 
   transferBalance: function(form){
-    return api.call('post',EMPLUS_CONFIG.API_URL + '/wallet/transferBalance/',form);
+    return api.call('post',EMPLUS_CONFIG.API_URL + '/wallet/transferBalance',form);
+  },
+
+  checkWalletNo: function(form){
+    return api.call('post',EMPLUS_CONFIG.API_URL + '/wallet/checkWalletNo',form);
   }
 }
