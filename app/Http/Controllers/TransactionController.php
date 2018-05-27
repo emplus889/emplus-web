@@ -25,7 +25,7 @@ class TransactionController extends Controller
     $kelas = new Transaction;
 
     if($no_trans == ''){
-      $no_trans = $this->generate_no_trans($no_wallet);
+      $no_trans = static::generate_no_trans($no_wallet);
     }
     
     $kelas->no_trans = $no_trans;
@@ -39,7 +39,7 @@ class TransactionController extends Controller
     return $no_trans;
   }
 
-  private function generate_no_trans($no_wallet)
+  private static function generate_no_trans($no_wallet)
   {
     $sub_no_wallet = substr($no_wallet,-3);
     $random = str_random(4);

@@ -62102,11 +62102,30 @@ var wallet = {
         commit('setWalletStat', 'fail');
       });
     },
+    transferBalance: function transferBalance(_ref2, form) {
+      var commit = _ref2.commit,
+          state = _ref2.state,
+          dispatch = _ref2.dispatch;
+
+      commit('setUpdateStat', 'loading');
+
+      __WEBPACK_IMPORTED_MODULE_0__api_wallet_js__["a" /* default */].transferBalance(form).then(function (response) {
+        if (response.data.saved) {
+          commit('setUpdate', response.data);
+          commit('setUpdateStat', 'success');
+        } else {
+          commit('setUpdateStat', 'fail');
+        }
+      }).catch(function (error) {
+        commit('setUpdate', error.response);
+        commit('setUpdateStat', 'fail');
+      });
+    },
 
 
     // reset
-    resetUpdateStat: function resetUpdateStat(_ref2) {
-      var commit = _ref2.commit;
+    resetUpdateStat: function resetUpdateStat(_ref3) {
+      var commit = _ref3.commit;
 
       commit('setUpdateStat', '');
     }
@@ -62161,6 +62180,10 @@ var wallet = {
   // get user profil
   getBalance: function getBalance(id) {
     return api.call('get', __WEBPACK_IMPORTED_MODULE_0__config_js__["a" /* EMPLUS_CONFIG */].API_URL + '/wallet/getBalance/' + id);
+  },
+
+  transferBalance: function transferBalance(form) {
+    return api.call('post', __WEBPACK_IMPORTED_MODULE_0__config_js__["a" /* EMPLUS_CONFIG */].API_URL + '/wallet/transferBalance/', form);
   }
 });
 
@@ -62446,21 +62469,110 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(70);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Transfer',
   data: function data() {
-    return {};
+    return {
+      form: {
+        no_wallet_origin: '',
+        no_wallet_destination: '',
+        amount: 0,
+        note: ''
+      }
+    };
   },
 
-
-  methods: {}
+  watch: {
+    updateStat: function updateStat(value) {
+      if (value == 'success') {
+        this.reset();
+      } else if (value == 'loading') {} else {}
+    }
+  },
+  methods: {
+    send: function send() {
+      this.$store.dispatch('wallet/transferBalance', this.form);
+    },
+    reset: function reset() {
+      this.form.no_wallet_origin = '';
+      this.form.no_wallet_destination = '';
+      this.form.amount = 0;
+      this.form.note = '';
+    }
+  },
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('wallet', {
+    updateResponse: 'update',
+    updateStat: 'updateStat'
+  }))
 });
 
 /***/ }),
@@ -62471,7 +62583,255 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "animated fadeIn" })
+  return _c(
+    "div",
+    { staticClass: "animated fadeIn" },
+    [
+      _vm.updateStat == "success"
+        ? _c("b-alert", { attrs: { show: "", variant: "primary" } }, [
+            _vm._v(_vm._s(_vm.updateResponse.message))
+          ])
+        : _vm.updateStat == "fail"
+          ? _c("b-alert", { attrs: { show: "", variant: "danger" } }, [
+              _vm._v(_vm._s(_vm.updateResponse.message))
+            ])
+          : _vm._e(),
+      _vm._v(" "),
+      _vm.updateStat == "loading"
+        ? _c(
+            "b-row",
+            [
+              _c(
+                "b-col",
+                [_c("b-card", [_vm._v("\n        Loading...\n      ")])],
+                1
+              )
+            ],
+            1
+          )
+        : _c(
+            "b-row",
+            [
+              _c(
+                "b-col",
+                { attrs: { sm: "12", md: "12", lg: "12" } },
+                [
+                  _c(
+                    "b-card",
+                    [
+                      _c("div", { attrs: { slot: "header" }, slot: "header" }, [
+                        _vm._v("\n          Transfer\n        ")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "b-row",
+                        [
+                          _c(
+                            "b-col",
+                            { attrs: { sm: "12" } },
+                            [
+                              _c(
+                                "b-form-group",
+                                [
+                                  _c(
+                                    "label",
+                                    { attrs: { for: "no_wallet_origin" } },
+                                    [_vm._v("Your Wallet")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("b-form-input", {
+                                    attrs: {
+                                      type: "text",
+                                      id: "no_wallet_origin",
+                                      placeholder:
+                                        "Enter destination wallet number"
+                                    },
+                                    model: {
+                                      value: _vm.form.no_wallet_origin,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.form,
+                                          "no_wallet_origin",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "form.no_wallet_origin"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-col",
+                            { attrs: { sm: "12" } },
+                            [
+                              _c(
+                                "b-form-group",
+                                [
+                                  _c(
+                                    "label",
+                                    { attrs: { for: "no_wallet_destination" } },
+                                    [_vm._v("Destination No. Wallet")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("b-form-input", {
+                                    attrs: {
+                                      type: "text",
+                                      id: "no_wallet_destination",
+                                      placeholder:
+                                        "Enter destination wallet number"
+                                    },
+                                    model: {
+                                      value: _vm.form.no_wallet_destination,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.form,
+                                          "no_wallet_destination",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "form.no_wallet_destination"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-col",
+                            { attrs: { sm: "12" } },
+                            [
+                              _c(
+                                "b-form-group",
+                                [
+                                  _c("label", { attrs: { for: "amount" } }, [
+                                    _vm._v("Amount")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("b-form-input", {
+                                    attrs: {
+                                      type: "text",
+                                      id: "amount",
+                                      placeholder:
+                                        "Enter amount you want to transfer"
+                                    },
+                                    model: {
+                                      value: _vm.form.amount,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.form, "amount", $$v)
+                                      },
+                                      expression: "form.amount"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-col",
+                            { attrs: { sm: "12" } },
+                            [
+                              _c(
+                                "b-form-group",
+                                [
+                                  _c("label", { attrs: { for: "note" } }, [
+                                    _vm._v("Note (Optional)")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("b-form-input", {
+                                    attrs: {
+                                      type: "text",
+                                      id: "note",
+                                      placeholder: "Enter transfer note"
+                                    },
+                                    model: {
+                                      value: _vm.form.note,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.form, "note", $$v)
+                                      },
+                                      expression: "form.note"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { attrs: { slot: "footer" }, slot: "footer" },
+                        [
+                          _c(
+                            "b-button",
+                            {
+                              attrs: {
+                                type: "submit",
+                                size: "sm",
+                                variant: "primary"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.send()
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-dot-circle-o" }),
+                              _vm._v(" Send")
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-button",
+                            {
+                              attrs: {
+                                type: "reset",
+                                size: "sm",
+                                variant: "danger"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.reset()
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-ban" }),
+                              _vm._v(" Reset")
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

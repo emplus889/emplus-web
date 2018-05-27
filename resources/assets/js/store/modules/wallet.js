@@ -48,6 +48,24 @@ export const wallet = {
         });
     },
 
+    transferBalance( {commit, state, dispatch}, form ){
+      commit('setUpdateStat', 'loading');
+
+      WalletAPI.transferBalance( form )
+        .then( function( response ){
+          if(response.data.saved){
+            commit('setUpdate', response.data);
+            commit('setUpdateStat', 'success');
+          }else{
+            commit('setUpdateStat', 'fail');
+          }
+        })
+        .catch(error => {
+          commit('setUpdate', error.response);   
+          commit('setUpdateStat', 'fail');
+        });
+    },
+
     // reset
     resetUpdateStat( {commit} ){
       commit('setUpdateStat', '');

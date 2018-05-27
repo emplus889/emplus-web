@@ -6,4 +6,8 @@ export default {
   getBalance: function(id){
     return api.call('get',EMPLUS_CONFIG.API_URL + '/wallet/getBalance/' + id);
   },
+
+  transferBalance: function(form){
+    return api.call('post',EMPLUS_CONFIG.API_URL + '/wallet/transferBalance/',form);
+  }
 }

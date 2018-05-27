@@ -66,29 +66,29 @@ class WalletController extends Controller
 
   public function transferBalance(Request $request)
   {
-    $origin_no = $request->origin_no;
-    $destination_no = $request->origin_no;
-    $balance = $request->balance;
+    $no_wallet_origin = $request->no_wallet_origin;
+    $no_wallet_destination = $request->no_wallet_destination;
+    $amount = $request->amount;
 
     // update origin wallet balance
-    $origin = Wallet::where('wallet_no',$origin_no);
-    $origin_balance = $origin->balance - $balance;
+    $origin = Wallet::where('no_wallet',$no_wallet_origin)->first();
+    $origin_balance = $origin->balance - $amount;
     $origin->update([
         'balance' => $origin_balance
     ]);
     
     // store new transaction
-    $no_trans = TransactionController::store('',$request->$origin_no, 'CREDIT', $request->note, $balance);
+    $no_trans = TransactionController::store('',$no_wallet_origin, 'CREDIT', $request->note, $amount);
 
     // update destination wallet balance
-    $destination = Wallet::where('wallet_no',$destination_no);
-    $destination_balance = $destination->balance + $balance;
+    $destination = Wallet::where('no_wallet',$no_wallet_destination)->first();
+    $destination_balance = $destination->balance + $amount;
     $destination->update([
         'balance' => $destination_balance
     ]);
 
     // store new transaction
-    TransactionController::store($no_trans,$request->$destination_no, 'DEBIT', $request->note, $balance);
+    TransactionController::store($no_trans,$no_wallet_destination, 'DEBIT', $request->note, $amount);
     
     return response()
         ->json([
