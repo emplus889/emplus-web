@@ -21,18 +21,6 @@ window.Event = new Vue; // handling vue event
 window.api = new Api(); // handling axios api
 window.auth = new Auth(); // handling authentication
 
-// handling laravel csrf token validation and headers
-axios.defaults.headers.common = {
-    'X-Requested-With': 'XMLHttpRequest',
-};
-let token = document.head.querySelector('meta[name="csrf-token"]');
-      
-if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-} else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-}
-
 // handling basic url route 
 const router = new VueRouter({
 	base: '/app',
@@ -44,21 +32,21 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
 	if (to.matched.some(record => record.meta.middlewareAuth)) {         
-			if (!auth.check()) {
-					next({
-							path: '/user/login',
-							query: { redirect: to.fullPath }
-					});
-					return;
-			}
+		if (!auth.check()) {
+				next({
+						path: '/user/login',
+						query: { redirect: to.fullPath }
+				});
+				return;
+		}
 	}
 	if (to.matched.some(record => record.meta.userLogin)) {         
-			if (auth.check()) {
-					next({
-							path: '/user'
-					});
-					return;
-			}
+		if (auth.check()) {
+				next({
+						path: '/user'
+				});
+				return;
+		}
 	}
 
 	next();

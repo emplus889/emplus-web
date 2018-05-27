@@ -1,14 +1,14 @@
-import UserAPI from '../../api/user.js';
+import WalletAPI from '../../api/wallet.js';
 
-export const user = {
+export const wallet = {
   namespaced: true,
 
   // state
   state: {
-    profile: {},
-    profileStat: '',
+    wallet: {},
     data: {}, //single data
     dataS: [], //collection
+    walletStat: '',
     dataStat: '',
     dataStatS: '',
     update: [], //update data
@@ -19,10 +19,10 @@ export const user = {
 
   // getters
   getters: {
-    profile: state => state.profile,
-    profileStat: state => state.profileStat,
+    wallet: state => state.wallet,
     data: state => state.data,
     dataS: state => state.dataS,
+    walletStat: state => state.walletStat,
     dataStat: state => state.dataStat,
     dataStatS: state => state.dataStatS,
     update: state => state.update,
@@ -34,17 +34,17 @@ export const user = {
   actions: {
 
     //user profil
-    getUser( { commit }){
-      commit('setProfileStat', 'loading');
+    getBalance( { commit }, id ){
+      commit('setWalletStat', 'loading');
       
-      UserAPI.getUser()
+      WalletAPI.getBalance( id )
         .then( function( response ){
-          commit('setProfile', response.data );
-          commit('setProfileStat', 'success');
+          commit('setWallet', response.data.model );
+          commit('setWalletStat', 'success');
         })
         .catch( error => {
-          commit('setProfile', error.response);
-          commit('setProfileStat', 'fail');
+          commit('setWallet', error.response);
+          commit('setWalletStat', 'fail');
         });
     },
 
@@ -56,17 +56,17 @@ export const user = {
 
   // mutations
   mutations: {
-    setProfile ( state, profile ){
-      state.profile = profile;
-    },
-    setProfileStat( state, status ){
-      state.profileStat = status;
+    setWallet ( state, data ){
+      state.wallet = data;
     },
     setData ( state, data ){
       state.data = data;
     },
     setDataS ( state, data ){
       state.dataS = data;
+    },
+    setWalletStat( state, status ){
+      state.walletStat = status;
     },
     setDataStat( state, status ){
       state.dataStat = status;

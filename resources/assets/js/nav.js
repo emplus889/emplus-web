@@ -2,12 +2,12 @@ export default {
   items: [
     {
       name: 'Dashboard',
-      url: '/dashboard',
+      url: '/user',
       icon: 'icon-speedometer',
     },
     {
       title: true,
-      name: 'E-Wallet',
+      name: 'Wallet',
       class: '',
       wrapper: {
         element: '',
@@ -15,29 +15,33 @@ export default {
       }
     },
     {
-      name: 'Transfer',
-      url: '/theme/colors',
-      icon: 'icon-drop'
+      name: 'My Wallet',
+      url: '/user/wallet',
+      icon: 'icon-wallet'
     },
     {
-      name: 'History',
-      url: '/theme/typography',
-      icon: 'icon-pencil'
+      name: 'Transfer',
+      url: '/user/transfer',
+      icon: 'fa fa-exchange'
     },
-
+    {
+      name: 'Promo',
+      url: '/user/promo',
+      icon: 'fa fa-star'
+    },
     {
       title: true,
       name: 'Settings'
     },
     {
       name: 'Account',
-      url: '/theme/colors',
-      icon: 'icon-drop'
+      url: '/user/account',
+      icon: 'fa fa-user'
     },
     {
       name: 'Application',
-      url: '/theme/colors',
-      icon: 'icon-drop'
+      url: '/user/application',
+      icon: 'fa fa-cogs'
     },
   ]
 }

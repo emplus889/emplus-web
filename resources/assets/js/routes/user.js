@@ -1,6 +1,5 @@
 //all view component is imported here
 import full from '../containers/full.vue';
-import userHeader from '../user/components/header.vue';
 import userLogin from '../user/views/login.vue';
 import userRegister from '../user/views/register.vue';
 import userDashboard from '../user/views/dashboard.vue';
@@ -20,10 +19,19 @@ const routes = [
     meta: { userLogin: true } },  
   
   // dashboard
-  { path: '/user',
-    name: 'userDashboard', 
+  { path: '/',
+    redirect: '/user',
+    name: 'User Home', 
     components: { default: full },
-    meta: { middlewareAuth: true } },
+    meta: { middlewareAuth: true },
+    children:[
+      {
+        path: 'user',
+        name: 'Dashboard',
+        component: userDashboard
+      }
+    ] 
+  },
 ]
 
 //export routes

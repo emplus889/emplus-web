@@ -28,6 +28,9 @@ export default {
     AppFooter,
     Breadcrumb
   },
+  beforeRouteEnter(to, from, next){
+    next(vm => vm.$store.dispatch('user/getUser'));
+  },
   data () {
     return {
       nav: nav.items

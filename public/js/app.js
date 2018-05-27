@@ -25052,7 +25052,7 @@ var OBSERVER_CONFIG = {
 /* unused harmony export install */
 /* unused harmony export mapState */
 /* unused harmony export mapMutations */
-/* unused harmony export mapGetters */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapGetters; });
 /* unused harmony export mapActions */
 /* unused harmony export createNamespacedHelpers */
 /**
@@ -38598,18 +38598,6 @@ window.axios = __WEBPACK_IMPORTED_MODULE_4_axios___default.a; // handling http p
 window.Event = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a(); // handling vue event
 window.api = new __WEBPACK_IMPORTED_MODULE_6__api_js__["a" /* default */](); // handling axios api
 window.auth = new __WEBPACK_IMPORTED_MODULE_7__auth_js__["a" /* default */](); // handling authentication
-
-// handling laravel csrf token validation and headers
-axios.defaults.headers.common = {
-		'X-Requested-With': 'XMLHttpRequest'
-};
-var token = document.head.querySelector('meta[name="csrf-token"]');
-
-if (token) {
-		window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-} else {
-		console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-}
 
 // handling basic url route 
 var router = new __WEBPACK_IMPORTED_MODULE_3_vue_router__["a" /* default */]({
@@ -53624,13 +53612,8 @@ var Auth = function () {
 
     this.token = window.localStorage.getItem('token');
 
-    var userData = window.localStorage.getItem('user');
-    this.user = userData ? JSON.parse(userData) : null;
-
     if (this.token) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.token;
-
-      this.getUser();
     }
   }
 
@@ -53638,12 +53621,10 @@ var Auth = function () {
     key: 'login',
     value: function login(token, user) {
       window.localStorage.setItem('token', token);
-      window.localStorage.setItem('user', JSON.stringify(user));
 
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
       this.token = token;
-      this.user = user;
 
       Event.$emit('userLoggedIn');
     }
@@ -53653,26 +53634,13 @@ var Auth = function () {
       return !!this.token;
     }
   }, {
-    key: 'getUser',
-    value: function getUser() {
-      var _this = this;
-
-      api.call('get', '/api/v1/getUser').then(function (_ref) {
-        var user = _ref.user;
-
-        _this.user = user;
-      });
-    }
-  }, {
     key: 'logout',
     value: function logout() {
       window.localStorage.setItem('token', '');
-      window.localStorage.setItem('user', '');
 
       axios.defaults.headers.common['Authorization'] = '';
 
       this.token = '';
-      this.user = '';
     }
   }]);
 
@@ -53690,6 +53658,8 @@ var Auth = function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_user__ = __webpack_require__(349);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_wallet__ = __webpack_require__(954);
+
 
 
 
@@ -53699,7 +53669,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
   modules: {
-    user: __WEBPACK_IMPORTED_MODULE_2__modules_user__["a" /* user */]
+    user: __WEBPACK_IMPORTED_MODULE_2__modules_user__["a" /* user */],
+    wallet: __WEBPACK_IMPORTED_MODULE_3__modules_wallet__["a" /* wallet */]
   }
 }));
 
@@ -53766,13 +53737,13 @@ var user = {
   actions: {
 
     //user profil
-    profile: function profile(_ref, p) {
+    getUser: function getUser(_ref) {
       var commit = _ref.commit;
 
       commit('setProfileStat', 'loading');
 
-      __WEBPACK_IMPORTED_MODULE_0__api_user_js__["a" /* default */].profile(p).then(function (response) {
-        commit('setProfile', response.data.model);
+      __WEBPACK_IMPORTED_MODULE_0__api_user_js__["a" /* default */].getUser().then(function (response) {
+        commit('setProfile', response.data);
         commit('setProfileStat', 'success');
       }).catch(function (error) {
         commit('setProfile', error.response);
@@ -53836,8 +53807,8 @@ var user = {
 /* harmony default export */ __webpack_exports__["a"] = ({
 
   // get user profil
-  profile: function profile() {
-    return axios.get(__WEBPACK_IMPORTED_MODULE_0__config_js__["a" /* EMPLUS_CONFIG */].API_URL + '/profile');
+  getUser: function getUser() {
+    return api.call('get', __WEBPACK_IMPORTED_MODULE_0__config_js__["a" /* EMPLUS_CONFIG */].API_URL + '/getUser');
   }
 });
 
@@ -53869,16 +53840,13 @@ var EMPLUS_CONFIG = {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__containers_full_vue__ = __webpack_require__(353);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__containers_full_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__containers_full_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__user_components_header_vue__ = __webpack_require__(411);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__user_components_header_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__user_components_header_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user_views_login_vue__ = __webpack_require__(414);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user_views_login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__user_views_login_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__user_views_register_vue__ = __webpack_require__(417);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__user_views_register_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__user_views_register_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__user_views_dashboard_vue__ = __webpack_require__(420);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__user_views_dashboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__user_views_dashboard_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__user_views_login_vue__ = __webpack_require__(414);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__user_views_login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__user_views_login_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user_views_register_vue__ = __webpack_require__(417);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user_views_register_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__user_views_register_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__user_views_dashboard_vue__ = __webpack_require__(420);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__user_views_dashboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__user_views_dashboard_vue__);
 //all view component is imported here
-
 
 
 
@@ -53889,20 +53857,27 @@ var routes = [
 // login
 { path: '/user/login',
   name: 'userLogin',
-  components: { default: __WEBPACK_IMPORTED_MODULE_2__user_views_login_vue___default.a },
+  components: { default: __WEBPACK_IMPORTED_MODULE_1__user_views_login_vue___default.a },
   meta: { userLogin: true } },
 
 // register
 { path: '/user/register',
   name: 'userRegister',
-  components: { default: __WEBPACK_IMPORTED_MODULE_3__user_views_register_vue___default.a },
+  components: { default: __WEBPACK_IMPORTED_MODULE_2__user_views_register_vue___default.a },
   meta: { userLogin: true } },
 
 // dashboard
-{ path: '/user',
-  name: 'userDashboard',
+{ path: '/',
+  redirect: '/user',
+  name: 'User Home',
   components: { default: __WEBPACK_IMPORTED_MODULE_0__containers_full_vue___default.a },
-  meta: { middlewareAuth: true } }];
+  meta: { middlewareAuth: true },
+  children: [{
+    path: 'user',
+    name: 'Dashboard',
+    component: __WEBPACK_IMPORTED_MODULE_3__user_views_dashboard_vue___default.a
+  }]
+}];
 
 //export routes
 /* harmony default export */ __webpack_exports__["a"] = (routes);
@@ -53992,6 +53967,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     AppFooter: __WEBPACK_IMPORTED_MODULE_1__components___["c" /* Footer */],
     Breadcrumb: __WEBPACK_IMPORTED_MODULE_1__components___["b" /* Breadcrumb */]
   },
+  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
+    next(function (vm) {
+      return vm.$store.dispatch('user/getUser');
+    });
+  },
   data: function data() {
     return {
       nav: __WEBPACK_IMPORTED_MODULE_0__nav__["a" /* default */].items
@@ -54016,35 +53996,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["a"] = ({
   items: [{
     name: 'Dashboard',
-    url: '/dashboard',
+    url: '/user',
     icon: 'icon-speedometer'
   }, {
     title: true,
-    name: 'E-Wallet',
+    name: 'Wallet',
     class: '',
     wrapper: {
       element: '',
       attributes: {}
     }
   }, {
-    name: 'Transfer',
-    url: '/theme/colors',
-    icon: 'icon-drop'
+    name: 'My Wallet',
+    url: '/user/wallet',
+    icon: 'icon-wallet'
   }, {
-    name: 'History',
-    url: '/theme/typography',
-    icon: 'icon-pencil'
+    name: 'Transfer',
+    url: '/user/transfer',
+    icon: 'fa fa-exchange'
+  }, {
+    name: 'Promo',
+    url: '/user/promo',
+    icon: 'fa fa-star'
   }, {
     title: true,
     name: 'Settings'
   }, {
     name: 'Account',
-    url: '/theme/colors',
-    icon: 'icon-drop'
+    url: '/user/account',
+    icon: 'fa fa-user'
   }, {
     name: 'Application',
-    url: '/theme/colors',
-    icon: 'icon-drop'
+    url: '/user/application',
+    icon: 'fa fa-cogs'
   }]
 });
 
@@ -55625,16 +55609,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -55716,6 +55690,9 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(70);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -55729,6 +55706,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'header-dropdown',
   data: function data() {
@@ -55739,7 +55718,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       auth.logout();
       this.$router.push('/user/login');
     }
-  }
+  },
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('user', {
+    profile: 'profile',
+    profileStat: 'profileStat'
+  }))
 });
 
 /***/ }),
@@ -55767,17 +55750,17 @@ var render = function() {
       _c(
         "b-dropdown-header",
         { staticClass: "text-center", attrs: { tag: "div" } },
-        [_c("strong", [_vm._v("Account")])]
+        [_c("strong", [_vm._v("Hi, " + _vm._s(_vm.profile.name))])]
       ),
       _vm._v(" "),
       _c("b-dropdown-item", [
         _c("i", { staticClass: "fa fa-user" }),
-        _vm._v(" Profile")
+        _vm._v(" Account")
       ]),
       _vm._v(" "),
       _c("b-dropdown-item", [
         _c("i", { staticClass: "fa fa-wrench" }),
-        _vm._v(" Settings")
+        _vm._v(" Application")
       ]),
       _vm._v(" "),
       _c("b-dropdown-divider"),
@@ -55846,46 +55829,30 @@ var render = function() {
       _vm._v(" "),
       _c(
         "b-navbar-nav",
-        { staticClass: "d-md-down-none" },
-        [
-          _c("b-nav-item", { staticClass: "px-3" }, [_vm._v("Dashboard")]),
-          _vm._v(" "),
-          _c("b-nav-item", { staticClass: "px-3" }, [_vm._v("Users")]),
-          _vm._v(" "),
-          _c("b-nav-item", { staticClass: "px-3" }, [_vm._v("Settings")])
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "b-navbar-nav",
         { staticClass: "ml-auto" },
         [
-          _c("b-nav-item", { staticClass: "d-md-down-none" }, [
-            _c("i", { staticClass: "icon-bell" })
-          ]),
-          _vm._v(" "),
-          _c("b-nav-item", { staticClass: "d-md-down-none" }, [
-            _c("i", { staticClass: "icon-list" })
-          ]),
-          _vm._v(" "),
-          _c("b-nav-item", { staticClass: "d-md-down-none" }, [
-            _c("i", { staticClass: "icon-location-pin" })
-          ]),
+          _c(
+            "b-nav-item-dropdown",
+            { attrs: { right: "", "no-caret": "" } },
+            [
+              _c("template", { slot: "button-content" }, [
+                _c("i", { staticClass: "icon-bell" })
+              ]),
+              _vm._v(" "),
+              _c(
+                "b-dropdown-header",
+                { staticClass: "text-center", attrs: { tag: "div" } },
+                [_c("strong", [_vm._v("Notifikasi")])]
+              ),
+              _vm._v(" "),
+              _c("b-dropdown-item", [_vm._v("Belum ada notifikasi")])
+            ],
+            2
+          ),
           _vm._v(" "),
           _c("HeaderDropdown")
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "navbar-toggler aside-menu-toggler d-md-down-none",
-          attrs: { type: "button" },
-          on: { click: _vm.asideToggle }
-        },
-        [_c("span", { staticClass: "navbar-toggler-icon" })]
       )
     ],
     1
@@ -57430,105 +57397,9 @@ if (false) {
 }
 
 /***/ }),
-/* 411 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(4)
-/* script */
-var __vue_script__ = __webpack_require__(412)
-/* template */
-var __vue_template__ = __webpack_require__(413)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/user/components/header.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-785953d8", Component.options)
-  } else {
-    hotAPI.reload("data-v-785953d8", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 412 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      authenticated: auth.check(),
-      user: auth.user
-    };
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    Event.$on('userLoggedIn', function () {
-      _this.authenticated = true;
-      _this.user = auth.user;
-    });
-  },
-
-  methods: {}
-});
-
-/***/ }),
-/* 413 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n  this is header\n")])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-785953d8", module.exports)
-  }
-}
-
-/***/ }),
+/* 411 */,
+/* 412 */,
+/* 413 */,
 /* 414 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -58439,19 +58310,108 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(70);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'Dashboard',
   data: function data() {
-    return {};
+    return {
+      slide: 0,
+      sliding: null
+    };
   },
 
-  methods: {}
+  watch: {
+    profileStat: function profileStat(value) {
+      if (value === "success") {
+        this.$store.dispatch('wallet/getBalance', this.profile.id);
+      }
+    }
+  },
+  methods: {
+    // carousel
+    onSlideStart: function onSlideStart(slide) {
+      this.sliding = true;
+    },
+    onSlideEnd: function onSlideEnd(slide) {
+      this.sliding = false;
+    }
+  },
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('user', {
+    profile: 'profile',
+    profileStat: 'profileStat'
+  }), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('wallet', {
+    wallet: 'wallet',
+    walletStat: 'walletStat'
+  }))
 });
 
 /***/ }),
@@ -58462,7 +58422,169 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n  this is dashboard\n")])
+  return _c(
+    "div",
+    { staticClass: "animated fadeIn" },
+    [
+      _c(
+        "b-row",
+        [
+          _c(
+            "b-col",
+            { attrs: { sm: "12", md: "12" } },
+            [
+              _c(
+                "b-carousel",
+                {
+                  staticStyle: { "text-shadow": "1px 1px 2px #333" },
+                  attrs: {
+                    id: "carousel1",
+                    controls: "",
+                    indicators: "",
+                    background: "#ababab",
+                    interval: 4000,
+                    "img-width": "1024",
+                    "img-height": "480"
+                  },
+                  on: {
+                    "sliding-start": _vm.onSlideStart,
+                    "sliding-end": _vm.onSlideEnd
+                  },
+                  model: {
+                    value: _vm.slide,
+                    callback: function($$v) {
+                      _vm.slide = $$v
+                    },
+                    expression: "slide"
+                  }
+                },
+                [
+                  _c("b-carousel-slide", {
+                    attrs: {
+                      "img-src": "https://lorempixel.com/1024/480/technics/2/"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("b-carousel-slide", {
+                    attrs: {
+                      "img-src": "https://lorempixel.com/1024/480/technics/4/"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("b-carousel-slide", {
+                    attrs: {
+                      "img-src": "https://lorempixel.com/1024/480/technics/8/"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("b-col", { attrs: { sm: "12", md: "12" } }, [_c("hr")]),
+          _vm._v(" "),
+          _c(
+            "b-col",
+            { attrs: { sm: "6", md: "4" } },
+            [
+              _c(
+                "b-card",
+                { staticClass: "text-white bg-primary" },
+                [
+                  _c("div", { staticClass: "h1 text-right mb-4" }, [
+                    _c("i", { staticClass: "icon-wallet" })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "h4 mb-0" }, [
+                    _vm._v(_vm._s(_vm.wallet.balance))
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "small",
+                    { staticClass: "text-uppercase font-weight-bold" },
+                    [_vm._v("Wallet")]
+                  ),
+                  _vm._v(" "),
+                  _c("b-progress", {
+                    staticClass: "progress-xs mt-3 mb-0",
+                    attrs: { height: "{}", variant: "info", value: 0 }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "b-col",
+            { attrs: { sm: "6", md: "4" } },
+            [
+              _c(
+                "b-card",
+                { staticClass: "text-white bg-danger" },
+                [
+                  _c("div", { staticClass: "h1 text-right mb-4" }, [
+                    _c("i", { staticClass: "fa fa-exchange" })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "h4 mb-0" }, [_vm._v(" ")]),
+                  _vm._v(" "),
+                  _c(
+                    "small",
+                    { staticClass: "text-uppercase font-weight-bold" },
+                    [_vm._v("Transfer")]
+                  ),
+                  _vm._v(" "),
+                  _c("b-progress", {
+                    staticClass: "progress-xs mt-3 mb-0",
+                    attrs: { height: "{}", variant: "info", value: 0 }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "b-col",
+            { attrs: { sm: "6", md: "4" } },
+            [
+              _c(
+                "b-card",
+                { staticClass: "text-white bg-warning" },
+                [
+                  _c("div", { staticClass: "h1 text-right mb-4" }, [
+                    _c("i", { staticClass: "fa fa-star" })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "h4 mb-0" }, [_vm._v(" ")]),
+                  _vm._v(" "),
+                  _c(
+                    "small",
+                    { staticClass: "text-uppercase font-weight-bold" },
+                    [_vm._v("Promo")]
+                  ),
+                  _vm._v(" "),
+                  _c("b-progress", {
+                    staticClass: "progress-xs mt-3 mb-0",
+                    attrs: { height: "{}", variant: "info", value: 0 }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -61771,6 +61893,145 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 953 */,
+/* 954 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return wallet; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__api_wallet_js__ = __webpack_require__(955);
+
+
+var wallet = {
+  namespaced: true,
+
+  // state
+  state: {
+    wallet: {},
+    data: {}, //single data
+    dataS: [], //collection
+    walletStat: '',
+    dataStat: '',
+    dataStatS: '',
+    update: [], //update data
+    updateStat: '',
+    rules: [], //laravel rules
+    options: [] //laravel options
+  },
+
+  // getters
+  getters: {
+    wallet: function wallet(state) {
+      return state.wallet;
+    },
+    data: function data(state) {
+      return state.data;
+    },
+    dataS: function dataS(state) {
+      return state.dataS;
+    },
+    walletStat: function walletStat(state) {
+      return state.walletStat;
+    },
+    dataStat: function dataStat(state) {
+      return state.dataStat;
+    },
+    dataStatS: function dataStatS(state) {
+      return state.dataStatS;
+    },
+    update: function update(state) {
+      return state.update;
+    },
+    updateStat: function updateStat(state) {
+      return state.updateStat;
+    },
+    rules: function rules(state) {
+      return state.rules;
+    },
+    options: function options(state) {
+      return state.options;
+    }
+  },
+
+  actions: {
+
+    //user profil
+    getBalance: function getBalance(_ref, id) {
+      var commit = _ref.commit;
+
+      commit('setWalletStat', 'loading');
+
+      __WEBPACK_IMPORTED_MODULE_0__api_wallet_js__["a" /* default */].getBalance(id).then(function (response) {
+        commit('setWallet', response.data.model);
+        commit('setWalletStat', 'success');
+      }).catch(function (error) {
+        commit('setWallet', error.response);
+        commit('setWalletStat', 'fail');
+      });
+    },
+
+
+    // reset
+    resetUpdateStat: function resetUpdateStat(_ref2) {
+      var commit = _ref2.commit;
+
+      commit('setUpdateStat', '');
+    }
+  },
+
+  // mutations
+  mutations: {
+    setWallet: function setWallet(state, data) {
+      state.wallet = data;
+    },
+    setData: function setData(state, data) {
+      state.data = data;
+    },
+    setDataS: function setDataS(state, data) {
+      state.dataS = data;
+    },
+    setWalletStat: function setWalletStat(state, status) {
+      state.walletStat = status;
+    },
+    setDataStat: function setDataStat(state, status) {
+      state.dataStat = status;
+    },
+    setDataStatS: function setDataStatS(state, status) {
+      state.dataStatS = status;
+    },
+    setUpdate: function setUpdate(state, data) {
+      state.update = data;
+    },
+    setUpdateStat: function setUpdateStat(state, status) {
+      state.updateStat = status;
+    },
+    setRules: function setRules(state, rules) {
+      state.rules = rules;
+    },
+    setOptions: function setOptions(state, options) {
+      state.options = options;
+    }
+  }
+
+};
+
+/***/ }),
+/* 955 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_js__ = __webpack_require__(351);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+
+  // get user profil
+  getBalance: function getBalance(id) {
+    return api.call('get', __WEBPACK_IMPORTED_MODULE_0__config_js__["a" /* EMPLUS_CONFIG */].API_URL + '/getBalance/' + id);
+  }
+});
 
 /***/ })
 /******/ ]);
