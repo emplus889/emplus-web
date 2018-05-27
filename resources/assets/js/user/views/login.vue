@@ -36,6 +36,15 @@
               </b-card-body>
             </b-card>
           </b-card-group>
+          <b-card no-body class="text-white bg-primary py-5 d-lg-none d-xl-none d-md-down-block">
+              <b-card-body class="text-center">
+                <div>
+                  <h2>Sign up</h2>
+                  <p><b>Don't have an account yet?</b> then don't miss out the future of transaction by clicking register button, and get on the board with us</p>
+                  <b-link variant="primary" class="btn btn-warning mt-3" to="/user/register">Register Now!</b-link>
+                </div>
+              </b-card-body>
+            </b-card>
         </b-col>
       </b-row>
     </div>

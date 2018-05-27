@@ -57839,6 +57839,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -58092,6 +58101,46 @@ var render = function() {
                         ],
                         1
                       )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-card",
+                    {
+                      staticClass:
+                        "text-white bg-primary py-5 d-lg-none d-xl-none d-md-down-block",
+                      attrs: { "no-body": "" }
+                    },
+                    [
+                      _c("b-card-body", { staticClass: "text-center" }, [
+                        _c(
+                          "div",
+                          [
+                            _c("h2", [_vm._v("Sign up")]),
+                            _vm._v(" "),
+                            _c("p", [
+                              _c("b", [_vm._v("Don't have an account yet?")]),
+                              _vm._v(
+                                " then don't miss out the future of transaction by clicking register button, and get on the board with us"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "b-link",
+                              {
+                                staticClass: "btn btn-warning mt-3",
+                                attrs: {
+                                  variant: "primary",
+                                  to: "/user/register"
+                                }
+                              },
+                              [_vm._v("Register Now!")]
+                            )
+                          ],
+                          1
+                        )
+                      ])
                     ],
                     1
                   )
