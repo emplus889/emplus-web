@@ -3,6 +3,9 @@ import full from '../containers/full.vue';
 import userLogin from '../user/views/login.vue';
 import userRegister from '../user/views/register.vue';
 import userDashboard from '../user/views/dashboard.vue';
+import userWallet from '../user/views/wallet.vue';
+import userTransfer from '../user/views/transfer.vue';
+import userPromo from '../user/views/promo.vue';
 
 //all routes
 const routes = [
@@ -19,16 +22,31 @@ const routes = [
     meta: { userLogin: true } },  
   
   // dashboard
-  { path: '/',
-    redirect: '/user',
+  { path: '/user',
+    redirect: '/user/dashboard',
     name: 'User Home', 
     components: { default: full },
     meta: { middlewareAuth: true },
     children:[
       {
-        path: 'user',
+        path: 'dashboard',
         name: 'Dashboard',
         component: userDashboard
+      },
+      {
+        path: 'wallet',
+        name: 'Wallet',
+        component: userWallet
+      },
+      {
+        path: 'transfer',
+        name: 'Transfer',
+        component: userTransfer
+      },
+      {
+        path: 'promo',
+        name: 'Promo',
+        component: userPromo
       }
     ] 
   },

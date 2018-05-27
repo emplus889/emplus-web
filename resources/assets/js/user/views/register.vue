@@ -1,5 +1,5 @@
 <template>
-  <div class="app flex-row align-items-center">
+  <div class="app flex-row align-items-center animated fadeIn">
     <div class="container">
       <b-row class="justify-content-center">
         <b-col md="6" sm="8">
@@ -17,7 +17,7 @@
 
               <b-input-group class="mb-3">
                 <b-input-group-prepend>
-                  <b-input-group-text>Name</b-input-group-text>
+                  <b-input-group-text>N</b-input-group-text>
                 </b-input-group-prepend>
                 <input type="text" class="form-control" placeholder="Name" v-model="name" >
               </b-input-group>
