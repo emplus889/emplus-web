@@ -14,13 +14,13 @@
     <title>EMPLUS</title>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- icon-->
-    <link rel="icon" href="{{asset('images/logo.png')}}" sizes="16x16">
-    <link rel="icon" href="{{asset('images/logo.png')}}" sizes="32x32">
-    <link rel="apple-touch-icon" href="{{asset('images/logo.png')}}"/>
-    <link rel="apple-touch-icon" href="{{asset('images/logo.png')}}" sizes="76x76" />
-    <link rel="apple-touch-icon" href="{{asset('images/logo.png')}}" sizes="120x120" />
-    <link rel="apple-touch-icon" href="{{asset('images/logo.png')}}" sizes="152x152" />
-    <link rel="apple-touch-icon" href="{{asset('images/logo.png')}}" sizes="180x180" />
+    <link rel="icon" href="{{asset('images/favicon.png')}}" sizes="16x16">
+    <link rel="icon" href="{{asset('images/favicon.png')}}" sizes="32x32">
+    <link rel="apple-touch-icon" href="{{asset('images/favicon.png')}}"/>
+    <link rel="apple-touch-icon" href="{{asset('images/favicon.png')}}" sizes="76x76" />
+    <link rel="apple-touch-icon" href="{{asset('images/favicon.png')}}" sizes="120x120" />
+    <link rel="apple-touch-icon" href="{{asset('images/favicon.png')}}" sizes="152x152" />
+    <link rel="apple-touch-icon" href="{{asset('images/favicon.png')}}" sizes="180x180" />
 
     <!-- Global stylesheets -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">

@@ -5,7 +5,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <!-- brand -->
-    <b-link class="navbar-brand" to="#">EMPLUS</b-link>
+    <b-link class="navbar-brand" to="/user/dashboard"></b-link>
     <!-- toggle -->
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" @click="sidebarToggle">
       <span class="navbar-toggler-icon"></span>

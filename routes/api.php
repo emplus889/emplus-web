@@ -8,19 +8,22 @@ Route::post('/login', 'AuthController@login');
 Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function(){
     
     // auth
-    Route::get('/getUser', 'AuthController@getUser');
-    Route::post('/logout', 'AuthController@logout');
-
-    // user
-    Route::get('/userId', 'UserController@userId');
-    Route::get('/profile', 'UserController@profile');
-    Route::post('/details', 'UserController@details');
-    Route::post('/getFotoProfil/{id}', 'UserProfileController@getFotoProfil');
+    Route::group(['prefix'=>'auth'], function(){
+        Route::get('/getUser', 'AuthController@getUser');
+        Route::post('/logout', 'AuthController@logout');
+    });
 
     // wallet
-    Route::get('/getBalance/{id}', 'WalletController@getBalance');
-    Route::post('/createWallet', 'WalletController@storeWallet');
-    Route::post('/checkWalletNo', 'WalletController@checkWalletNo');
-    Route::post('/addBalance', 'WalletController@addBalance');
-    Route::post('/transferBalance', 'WalletController@transferBalance');
+    Route::group(['prefix'=>'wallet'], function(){
+        Route::get('/getBalance/{id}', 'WalletController@getBalance');
+        Route::post('/createWallet', 'WalletController@storeWallet');
+        Route::post('/checkWalletNo', 'WalletController@checkWalletNo');
+        Route::post('/addBalance', 'WalletController@addBalance');
+        Route::post('/transferBalance', 'WalletController@transferBalance');
+    });
+
+    // transaction
+    Route::group(['prefix'=>'transaction'], function(){
+        Route::get('/index/{id}', 'TransactionController@index');
+    });
 });

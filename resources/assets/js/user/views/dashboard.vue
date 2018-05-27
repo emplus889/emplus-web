@@ -28,35 +28,53 @@
       <b-col sm="12" md="12"><hr></b-col>
       <!-- separator -->
 
-      <b-col sm="6" md="4">
-        <b-card class="text-white bg-primary">
-          <div class="h1 text-right mb-4">
-            <i class="icon-wallet"></i>
-          </div>
-          <div class="h4 mb-0">{{ wallet.balance }}</div>
-          <small class="text-uppercase font-weight-bold">Wallet</small>
-          <b-progress height={} class="progress-xs mt-3 mb-0" variant="info" :value="0"/>
-        </b-card>
+      <b-col sm="6" md="3">
+        <b-link to="/user/wallet">
+          <b-card class="text-white bg-primary">
+            <div class="h1 text-right mb-4">
+              <i class="icon-wallet"></i>
+            </div>
+            <div class="h4 mb-0">{{ wallet.balance }}</div>
+            <small class="text-uppercase font-weight-bold">Wallet: {{ wallet.no_wallet }}</small>
+            <b-progress height={} class="progress-xs mt-3 mb-0" variant="info" :value="0"/>
+          </b-card>
+        </b-link>
       </b-col>
-      <b-col sm="6" md="4">
-        <b-card class="text-white bg-danger">
-          <div class="h1 text-right mb-4">
-            <i class="fa fa-exchange"></i>
-          </div>
-          <div class="h4 mb-0">&nbsp;</div>
-          <small class="text-uppercase font-weight-bold">Transfer</small>
-          <b-progress height={} class="progress-xs mt-3 mb-0" variant="info" :value="0"/>
-        </b-card>
+       <b-col sm="6" md="3">
+        <b-link to="/user/topUp">
+          <b-card class="text-white bg-danger">
+            <div class="h1 text-right mb-4">
+              <i class="fa fa-plus-square"></i>
+            </div>
+            <div class="h4 mb-0">&nbsp;</div>
+            <small class="text-uppercase font-weight-bold">Top Up Wallet Balance</small>
+            <b-progress height={} class="progress-xs mt-3 mb-0" variant="info" :value="0"/>
+          </b-card>
+        </b-link>
       </b-col>
-      <b-col sm="6" md="4">
-        <b-card class="text-white bg-warning">
-          <div class="h1 text-right mb-4">
-            <i class="fa fa-star"></i>
-          </div>
-          <div class="h4 mb-0">&nbsp;</div>
-          <small class="text-uppercase font-weight-bold">Promo</small>
-          <b-progress height={} class="progress-xs mt-3 mb-0" variant="info" :value="0"/>
-        </b-card>
+      <b-col sm="6" md="3">
+        <b-link to="/user/transfer">
+          <b-card class="text-white bg-danger">
+            <div class="h1 text-right mb-4">
+              <i class="fa fa-exchange"></i>
+            </div>
+            <div class="h4 mb-0">&nbsp;</div>
+            <small class="text-uppercase font-weight-bold">Transfer</small>
+            <b-progress height={} class="progress-xs mt-3 mb-0" variant="info" :value="0"/>
+          </b-card>
+        </b-link>
+      </b-col>
+      <b-col sm="6" md="3">
+        <b-link to="/user/promo">
+          <b-card class="text-white bg-warning">
+            <div class="h1 text-right mb-4">
+              <i class="fa fa-star"></i>
+            </div>
+            <div class="h4 mb-0">0</div>
+            <small class="text-uppercase font-weight-bold">Promo</small>
+            <b-progress height={} class="progress-xs mt-3 mb-0" variant="info" :value="0"/>
+          </b-card>
+        </b-link> 
       </b-col>
     </b-row>
   </div>
@@ -73,10 +91,15 @@ export default {
       sliding: null
     }
   },
+  created(){
+    if(this.profileStat == 'success'){
+      this.fetchWallet();
+    }
+  },
   watch: {
     profileStat(value){
-      if(value === "success"){
-        this.$store.dispatch('wallet/getBalance',this.profile.id);
+      if(value === 'success'){
+        this.fetchWallet();
       }
     }
   },
@@ -87,7 +110,10 @@ export default {
     },
     onSlideEnd (slide) {
       this.sliding = false
-    }
+    },
+    fetchWallet(){
+      this.$store.dispatch('wallet/getBalance',this.profile.id);
+    },
   },
   computed: {
     ...mapGetters('user',{

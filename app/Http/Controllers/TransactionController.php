@@ -10,6 +10,16 @@ use Response;
 
 class TransactionController extends Controller
 {
+  public function index($no_wallet)
+  {
+    $table_data = Transaction::where('no_wallet',$no_wallet)->get();
+
+    return response()
+    ->json([
+      'model' => $table_data
+    ]);
+  }
+
   public static function store($no_trans,$no_wallet,$type,$note,$amount)
   {
     $kelas = new Transaction;

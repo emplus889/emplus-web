@@ -20,6 +20,11 @@ export default {
       icon: 'icon-wallet'
     },
     {
+      name: 'Top Up',
+      url: '/user/topup',
+      icon: 'fa fa-plus-square'
+    },
+    {
       name: 'Transfer',
       url: '/user/transfer',
       icon: 'fa fa-exchange'

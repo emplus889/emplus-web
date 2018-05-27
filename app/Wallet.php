@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Wallet extends Model
 {
-    protected $table = 'wallet';
     /**
      * The attributes that are mass assignable.
      *

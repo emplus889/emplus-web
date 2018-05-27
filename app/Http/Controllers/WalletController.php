@@ -13,7 +13,7 @@ class WalletController extends Controller
 {
   public function getBalance($id)
   {
-    $table_data = Wallet::where('id_users','=',$id)->select('id','balance')->first();
+    $table_data = Wallet::where('id_users','=',$id)->first();
 
     return response()
       ->json([
@@ -26,6 +26,7 @@ class WalletController extends Controller
     $kelas = new Wallet;
 
     $kelas->id_users = $id_users;
+    $kelas->no_wallet = str_random(12);
     $kelas->balance = '0';
 
     $kelas->save();
