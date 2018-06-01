@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('mobile')->unique();
             $table->string('password');
-            $table->bool('status'); // check user state: verified/deleted
+            $table->tinyInteger('status'); // check user state: verified/deleted
             $table->rememberToken();
             $table->timestamps();
         });
