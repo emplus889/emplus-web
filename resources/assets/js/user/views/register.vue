@@ -2,7 +2,22 @@
   <div class="app flex-row align-items-center animated fadeIn">
     <div class="container">
       <b-row class="justify-content-center">
-        <b-col md="6" sm="8">
+
+        <!-- loading -->
+        <b-col md="6" sm="6" v-if="state == 'loading'">
+          <b-card no-body class="mx-4">
+            <b-card-body class="p-4">
+              <h1>Registering...</h1>
+            </b-card-body>
+          </b-card>
+        </b-col>
+
+        <!-- not loading -->
+        <b-col md="6" sm="8" v-else>
+
+          <!-- alert -->
+          <b-alert :show="alertDismissCountDown" variant="danger" dismissible @dismiss-count-down="alertCountDownChanged">{{alertMessage}}</b-alert>
+          
           <b-card no-body class="mx-4">
             <b-card-body class="p-4">
               <h1>Register</h1>
@@ -76,6 +91,10 @@
 export default {
   data(){
     return {
+      state: '',
+      alertMessage: '',
+      alertDismissSecs: 5,
+      alertDismissCountDown: 0,
       authenticated: auth.check(),
       email: '',
       first_name: '',
@@ -86,6 +105,11 @@ export default {
     }
   },
   mounted() {
+    document.addEventListener("keydown", (e) => {
+      if (e.keyCode == 13) {
+        this.register();
+      }
+    });
   },
   methods: {
     register(){
@@ -98,15 +122,26 @@ export default {
         c_password: this.c_password
       };
 
+      this.state = 'loading';
       axios.post('/api/register', data)
         .then(({data}) => {
+          this.state = 'success';
           auth.login(data.token, data.user);
           this.$router.push('/user');
         })  
-        .catch(({response}) => {                    
-            alert(response.data.message);
+        .catch(({response}) => {    
+            this.state = 'error';                
+            this.alertShow(response.data.message);
         });
     },
+    // for alert
+    alertCountDownChanged(alertDismissCountDown){
+      this.alertDismissCountDown = alertDismissCountDown
+    },
+    alertShow(message){
+      this.alertMessage = message;
+      this.alertDismissCountDown = this.alertDismissSecs
+    }
   }
 }
 </script>

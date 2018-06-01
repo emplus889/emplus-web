@@ -25,12 +25,17 @@ class AuthController extends Controller
 				'password' => 'required', 
 				'c_password' => 'required|same:password', 
 		]);
+
 		if ($validator->fails()) { 
-				return response()->json(['error'=>$validator->errors()], 401);            
+			return response()->json([
+				'message'=> $validator->errors(),
+				'status' => 401
+			], 401);            
 		}
+
 		$input = $request->all(); 
 		$input['password'] = bcrypt($input['password']); 
-		$user = User::create($input); 
+		$user = User::create($input + ['status' => $status]); 
 
 		WalletController::createWallet($user->id);
 
@@ -63,7 +68,7 @@ class AuthController extends Controller
 				'token' => $data->access_token,
 				'user' => $user,
 				'status' => 200
-		]);
+		], 200);
 	}
 
 	// login user
@@ -117,7 +122,7 @@ class AuthController extends Controller
         'token' => $data->access_token,
         'user' => $user,
         'status' => 200
-    ]);
+		], 200);
 	}
 
 	// check user

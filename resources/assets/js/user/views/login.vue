@@ -2,7 +2,24 @@
   <div class="app flex-row align-items-center animated fadeIn">
     <div class="container">
       <b-row class="justify-content-center">
-        <b-col md="8">
+
+        <!-- loading -->
+        <b-col md="8" v-if="state == 'loading'">
+          <b-card no-body class="text-white bg-primary py-5 d-lg-none d-xl-none d-md-down-block">
+            <b-card-body class="text-center">
+              <div>
+                <h2>Login...</h2>
+              </div>
+            </b-card-body>
+          </b-card>
+        </b-col>
+
+        <!-- not loading -->
+        <b-col md="8" v-else>
+          
+          <!-- alert -->
+          <b-alert :show="alertDismissCountDown" variant="danger" dismissible @dismiss-count-down="alertCountDownChanged">{{alertMessage}}</b-alert>
+      
           <b-card-group>
             <b-card no-body class="p-4">
               <b-card-body>
@@ -14,7 +31,7 @@
                 </b-input-group>
                 <b-input-group class="mb-4">
                   <b-input-group-prepend><b-input-group-text><i class="icon-lock"></i></b-input-group-text></b-input-group-prepend>
-                  <input type="password" class="form-control" placeholder="Password" v-model="password" >
+                  <input type="password" class="form-control" placeholder="Password" v-model="password">
                 </b-input-group>
                 <b-row>
                   <b-col cols="6">
@@ -55,12 +72,21 @@
 export default {
   data(){
     return {
+      state: '',
+      alertMessage: '',
+      alertDismissSecs: 5,
+      alertDismissCountDown: 0,
       authenticated: auth.check(),
       email: '',
       password: ''
     }
   },
   mounted() {
+    document.addEventListener("keydown", (e) => {
+      if (e.keyCode == 13) {
+        this.login();
+      }
+    });
   },
   methods: {
     login(){
@@ -68,16 +94,27 @@ export default {
         email: this.email,
         password: this.password
       };
-
+      
+      this.state = 'loading';
       axios.post('/api/login', data)
         .then(({data}) => {
+          this.state = 'success';
           auth.login(data.token, data.user);
           this.$router.push('/user');
         })  
-        .catch(({response}) => {                    
-            alert(response.data.message);
+        .catch(({response}) => {  
+          this.state = 'error';
+          this.alertShow(response.data.message);
         });
     },
+    // for alert
+    alertCountDownChanged(alertDismissCountDown){
+      this.alertDismissCountDown = alertDismissCountDown
+    },
+    alertShow(message){
+      this.alertMessage = message;
+      this.alertDismissCountDown = this.alertDismissSecs
+    }
   }
 }
 </script>
