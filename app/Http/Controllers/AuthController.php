@@ -19,7 +19,7 @@ class AuthController extends Controller
 	public function register(Request $request) 
 	{ 
 		$validator = Validator::make($request->all(), [ 
-				'name' => 'required', 
+				'firstname' => 'required', 
 				'email' => 'required|email', 
 				'mobile' => 'required', 
 				'password' => 'required', 
@@ -70,11 +70,11 @@ class AuthController extends Controller
 	public function login()
 	{
 		// Check if a user with the specified email exists
-    $user = User::whereEmail(request('email'))->first();
+	$user = User::whereEmail(request('email'))->first();
 
     if (!$user) {
         return response()->json([
-            'message' => 'Wrong email or password',
+            'message' => 'Wrong email or passwordxxx',
             'status' => 422
         ], 422);
     }
@@ -83,7 +83,7 @@ class AuthController extends Controller
     // belongs to this user
     if (!Hash::check(request('password'), $user->password)) {
         return response()->json([
-            'message' => 'Wrong email or password',
+            'message' => 'Wrong email or passwordsss',
             'status' => 422
         ], 422);
     }
@@ -104,7 +104,7 @@ class AuthController extends Controller
     // Check if the request was successful
     if ($response->getStatusCode() != 200) {
         return response()->json([
-            'message' => 'Wrong email or password',
+            'message' => 'Wrong email or passwordttt',
             'status' => 422
         ], 422);
     }

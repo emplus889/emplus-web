@@ -19,7 +19,7 @@
                 <b-input-group-prepend>
                   <b-input-group-text>N</b-input-group-text>
                 </b-input-group-prepend>
-                <input type="text" class="form-control" placeholder="Name" v-model="name" >
+                <input type="text" class="form-control" placeholder="Firstname" v-model="firstname" >
               </b-input-group>
 
               <b-input-group class="mb-3">
@@ -83,7 +83,7 @@ export default {
     register(){
       let data = {
         email: this.email,
-        name: this.name,
+        firstname: this.firstname,
         mobile: this.mobile,
         password: this.password,
         c_password: this.c_password

@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'mobile', 'password',
+        'firstname', 'email', 'mobile', 'password',
     ];
 
     /**
@@ -29,12 +29,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-
+    //relasi antar table
     public function Users_profile()
     {
         return $this->hasOne('App\Users_profile','id_users','id')->select('id_users','foto_profile');
     }
 
+    // relasi
     public function Wallet()
     {
         return $this->hasOne('App\Wallet','id_users','id')->select('id_users','balance');

@@ -47,7 +47,7 @@ class WalletController extends Controller
         ]);  
     }
 
-    $table_data = Wallet::with('user')->where('no_wallet',$no_wallet_destination)->select('id','id_users')->first();
+    $table_data = Wallet::with('user')->where('no_wallet',$no_wallet_destination)->select('id','id_users')->get();
 
     // check if no_wallet_destination exist
     if($table_data == null){

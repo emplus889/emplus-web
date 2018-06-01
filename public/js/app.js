@@ -12133,10 +12133,10 @@ var api_url = '';
 
 switch ("development") {
   case 'development':
-    api_url = 'https://emplus-web.dev/api/v1';
+    api_url = 'https://emplus-web.test/api/v1';
     break;
   case 'production':
-    api_url = 'https://emplus-web.dev/api/v1'; //TODO: change with production url
+    api_url = 'https://emplus-web.test/api/v1'; //TODO: change with production url
     break;
 }
 
@@ -58306,7 +58306,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       var data = {
         email: this.email,
-        name: this.name,
+        firstname: this.firstname,
         mobile: this.mobile,
         password: this.password,
         c_password: this.c_password
@@ -58414,19 +58414,22 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.name,
-                                    expression: "name"
+                                    value: _vm.firstname,
+                                    expression: "firstname"
                                   }
                                 ],
                                 staticClass: "form-control",
-                                attrs: { type: "text", placeholder: "Name" },
-                                domProps: { value: _vm.name },
+                                attrs: {
+                                  type: "text",
+                                  placeholder: "Firstname"
+                                },
+                                domProps: { value: _vm.firstname },
                                 on: {
                                   input: function($event) {
                                     if ($event.target.composing) {
                                       return
                                     }
-                                    _vm.name = $event.target.value
+                                    _vm.firstname = $event.target.value
                                   }
                                 }
                               })

@@ -12,7 +12,7 @@ class Wallet extends Model
      * @var array
      */
     protected $fillable = [
-        'id_users', 'wallet_no', 'balance',
+        'id_users', 'no_wallet', 'balance',
     ];
 
     public function User()
