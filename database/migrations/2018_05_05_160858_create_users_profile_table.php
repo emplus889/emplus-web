@@ -20,7 +20,7 @@ class CreateUsersProfileTable extends Migration
             $table->text('profil_pic');
             $table->text('identity_pic');
             $table->text('address');
-            $table->bool('gender');
+            $table->boolean('gender');
             $table->timestamps();
         });
     }

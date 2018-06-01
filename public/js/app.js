@@ -56095,7 +56095,7 @@ var render = function() {
       _c(
         "b-dropdown-header",
         { staticClass: "text-center", attrs: { tag: "div" } },
-        [_c("strong", [_vm._v("Hi, " + _vm._s(_vm.profile.name))])]
+        [_c("strong", [_vm._v("Hi, " + _vm._s(_vm.profile.first_name))])]
       ),
       _vm._v(" "),
       _c("b-dropdown-item", [
@@ -58286,13 +58286,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       authenticated: auth.check(),
       email: '',
-      name: '',
+      first_name: '',
+      last_name: '',
       mobile: '',
       password: '',
       c_password: ''
@@ -58306,7 +58314,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       var data = {
         email: this.email,
-        name: this.name,
+        first_name: this.first_name,
+        last_name: this.last_name,
         mobile: this.mobile,
         password: this.password,
         c_password: this.c_password
@@ -58405,7 +58414,11 @@ var render = function() {
                             [
                               _c(
                                 "b-input-group-prepend",
-                                [_c("b-input-group-text", [_vm._v("N")])],
+                                [
+                                  _c("b-input-group-text", [
+                                    _vm._v("First Name")
+                                  ])
+                                ],
                                 1
                               ),
                               _vm._v(" "),
@@ -58414,19 +58427,64 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.name,
-                                    expression: "name"
+                                    value: _vm.first_name,
+                                    expression: "first_name"
                                   }
                                 ],
                                 staticClass: "form-control",
-                                attrs: { type: "text", placeholder: "Name" },
-                                domProps: { value: _vm.name },
+                                attrs: {
+                                  type: "text",
+                                  placeholder: "First Name"
+                                },
+                                domProps: { value: _vm.first_name },
                                 on: {
                                   input: function($event) {
                                     if ($event.target.composing) {
                                       return
                                     }
-                                    _vm.name = $event.target.value
+                                    _vm.first_name = $event.target.value
+                                  }
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-input-group",
+                            { staticClass: "mb-3" },
+                            [
+                              _c(
+                                "b-input-group-prepend",
+                                [
+                                  _c("b-input-group-text", [
+                                    _vm._v("Last Name")
+                                  ])
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.last_name,
+                                    expression: "last_name"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  placeholder: "Last Name"
+                                },
+                                domProps: { value: _vm.last_name },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.last_name = $event.target.value
                                   }
                                 }
                               })

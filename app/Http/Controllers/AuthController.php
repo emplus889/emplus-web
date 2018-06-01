@@ -19,7 +19,7 @@ class AuthController extends Controller
 	public function register(Request $request) 
 	{ 
 		$validator = Validator::make($request->all(), [ 
-				'name' => 'required', 
+				'first_name' => 'required',
 				'email' => 'required|email', 
 				'mobile' => 'required', 
 				'password' => 'required', 
@@ -36,11 +36,11 @@ class AuthController extends Controller
 
 		// Send an internal API request to get an access token
     $data = [
-				'grant_type' => 'password',
-				'client_id' => env('CLIENT_ID'),
-				'client_secret' => env('CLIENT_SECRET'),
-				'username' => request('email'),
-				'password' => request('password'),
+			'grant_type' => 'password',
+			'client_id' => env('CLIENT_ID'),
+			'client_secret' => env('CLIENT_SECRET'),
+			'username' => request('email'),
+			'password' => request('password'),
 		];
 
 		$request = Request::create('/oauth/token', 'POST', $data);

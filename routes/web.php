@@ -15,6 +15,3 @@
 Route::get('/app/{vue?}', function () {
     return view('app');
 })->where('vue', '^(?!.*api).*$[\/\w\.-]*');
-
-Route::post('/login', 'Auth\LoginController@login');
-Route::post('/logout', 'Auth\LoginController@logout');

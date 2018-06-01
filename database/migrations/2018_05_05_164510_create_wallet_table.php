@@ -13,10 +13,10 @@ class CreateWalletTable extends Migration
      */
     public function up()
     {
-        Schema::create('wallet', function (Blueprint $table) {
+        Schema::create('wallets', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_users');
-            $table->string('wallet_no')->unique;
+            $table->string('no_wallet')->unique;
             $table->float('balance', 8, 2);
             $table->timestamps();
         });

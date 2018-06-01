@@ -17,9 +17,16 @@
 
               <b-input-group class="mb-3">
                 <b-input-group-prepend>
-                  <b-input-group-text>N</b-input-group-text>
+                  <b-input-group-text>First Name</b-input-group-text>
                 </b-input-group-prepend>
-                <input type="text" class="form-control" placeholder="Name" v-model="name" >
+                <input type="text" class="form-control" placeholder="First Name" v-model="first_name" >
+              </b-input-group>
+
+              <b-input-group class="mb-3">
+                <b-input-group-prepend>
+                  <b-input-group-text>Last Name</b-input-group-text>
+                </b-input-group-prepend>
+                <input type="text" class="form-control" placeholder="Last Name" v-model="last_name" >
               </b-input-group>
 
               <b-input-group class="mb-3">
@@ -71,7 +78,8 @@ export default {
     return {
       authenticated: auth.check(),
       email: '',
-      name: '',
+      first_name: '',
+      last_name: '',
       mobile: '',
       password: '',
       c_password: ''
@@ -83,7 +91,8 @@ export default {
     register(){
       let data = {
         email: this.email,
-        name: this.name,
+        first_name: this.first_name,
+        last_name: this.last_name,
         mobile: this.mobile,
         password: this.password,
         c_password: this.c_password
