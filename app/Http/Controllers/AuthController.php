@@ -35,7 +35,7 @@ class AuthController extends Controller
 
 		$input = $request->all(); 
 		$input['password'] = bcrypt($input['password']); 
-		$user = User::create($input + ['status' => $status]); 
+		$user = User::create($input + ['status' => '1']); 
 
 		WalletController::createWallet($user->id);
 

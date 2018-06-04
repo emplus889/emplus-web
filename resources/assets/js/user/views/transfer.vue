@@ -38,7 +38,7 @@
             <b-col sm="12">
               <b-form-group>
                 <label for="no_wallet_destination">No. Dompet Tujuan</label>
-                <b-form-input type="number" id="no_wallet_destination" placeholder="Masukkan no dompet tujuan" v-model="form.no_wallet_destination"></b-form-input>
+                <b-form-input type="text" id="no_wallet_destination" placeholder="Masukkan no dompet tujuan" v-model="form.no_wallet_destination"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col sm="12">
@@ -78,13 +78,13 @@
               <hr>
               <b-form-group>
                 <label for="name">Nama Tujuan Transfer</label>
-                <b-form-input type="text" id="name" disabled v-model="confirmData.user.name"></b-form-input>
+                <b-form-input type="text" id="first_name" disabled v-model="confirmData.user.first_name"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col sm="12">
               <b-form-group>
                 <label for="no_wallet_destination">No. Tujuan Transfer</label>
-                <b-form-input type="number" id="no_wallet_destination" v-model="form.no_wallet_destination" disabled></b-form-input>
+                <b-form-input type="text" id="no_wallet_destination" v-model="form.no_wallet_destination" disabled></b-form-input>
               </b-form-group>
             </b-col>
             <b-col sm="12">

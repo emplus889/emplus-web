@@ -60051,7 +60051,7 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("b-form-input", {
                                         attrs: {
-                                          type: "number",
+                                          type: "text",
                                           id: "no_wallet_destination",
                                           placeholder:
                                             "Masukkan no dompet tujuan"
@@ -60243,19 +60243,21 @@ var render = function() {
                                         _c("b-form-input", {
                                           attrs: {
                                             type: "text",
-                                            id: "name",
+                                            id: "first_name",
                                             disabled: ""
                                           },
                                           model: {
-                                            value: _vm.confirmData.user.name,
+                                            value:
+                                              _vm.confirmData.user.first_name,
                                             callback: function($$v) {
                                               _vm.$set(
                                                 _vm.confirmData.user,
-                                                "name",
+                                                "first_name",
                                                 $$v
                                               )
                                             },
-                                            expression: "confirmData.user.name"
+                                            expression:
+                                              "confirmData.user.first_name"
                                           }
                                         })
                                       ],
@@ -60284,7 +60286,7 @@ var render = function() {
                                         _vm._v(" "),
                                         _c("b-form-input", {
                                           attrs: {
-                                            type: "number",
+                                            type: "text",
                                             id: "no_wallet_destination",
                                             disabled: ""
                                           },

@@ -17,6 +17,6 @@ class Wallet extends Model
 
     public function User()
     {
-        return $this->hasOne('App\User','id','id_users')->select('id','name');
+        return $this->hasOne('App\User','id','id_users')->select('id','first_name');
     }
 }
