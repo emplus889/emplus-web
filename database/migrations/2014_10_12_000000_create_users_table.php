@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
+            $table->string('country_code', 4)->nullable();
             $table->string('mobile')->unique();
             $table->string('password');
             $table->boolean('status'); // check user state: verified/deleted

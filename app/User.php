@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name','last_name','email', 'mobile', 'password','status'
+        'first_name','last_name','email', 'mobile','country_code','password','status'
     ];
 
     /**
@@ -28,6 +28,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function tokens()
+    {
+        return $this->hasMany(Token::class);
+    }
+
+    public function getPhoneNumber()
+    {
+        return $this->country_code.$this->mobile;
+    }
 
     public function Users_profile()
     {

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Token;
 use App\Http\Controllers\WalletController;
 use Response;
 
@@ -138,6 +139,7 @@ class AuthController extends Controller
 
 		// Get the data from the response
 		$data = json_decode($response->getContent());
+		
 
 		// Format the final response in a desirable format
 		return response()->json([
