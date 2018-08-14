@@ -29,7 +29,6 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-
     public function Users_profile()
     {
         return $this->hasOne('App\Users_profile','id_users','id')->select('id_users','foto_profile');

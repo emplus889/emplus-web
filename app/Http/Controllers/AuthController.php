@@ -39,11 +39,22 @@ class AuthController extends Controller
 
 		WalletController::createWallet($user->id);
 
+		$client = DB::table('oauth_clients')
+			->where('password_client', true)
+			->first();
+			
+		if (!$client) {
+			return response()->json([
+					'message' => 'Wrong configuration.',
+					'status' => 500
+			], 500);
+		}	
+
 		// Send an internal API request to get an access token
     $data = [
 			'grant_type' => 'password',
-			'client_id' => env('CLIENT_ID'),
-			'client_secret' => env('CLIENT_SECRET'),
+			'client_id' => $client->id,
+			'client_secret' => $client->secret,
 			'username' => request('email'),
 			'password' => request('password'),
 		];
@@ -75,54 +86,65 @@ class AuthController extends Controller
 	public function login()
 	{
 		// Check if a user with the specified email exists
-    $user = User::whereEmail(request('email'))->first();
+		$user = User::whereEmail(request('email'))->first();
 
-    if (!$user) {
-        return response()->json([
-            'message' => 'Wrong email or password',
-            'status' => 422
-        ], 422);
-    }
+		if (!$user) {
+			return response()->json([
+				'message' => 'Wrong email or password',
+				'status' => 422
+			], 422);
+		}
 
-    // If a user with the email was found - check if the specified password
-    // belongs to this user
-    if (!Hash::check(request('password'), $user->password)) {
-        return response()->json([
-            'message' => 'Wrong email or password',
-            'status' => 422
-        ], 422);
-    }
+		// If a user with the email was found - check if the specified password
+		// belongs to this user
+		if (!Hash::check(request('password'), $user->password)) {
+			return response()->json([
+				'message' => 'Wrong email or password',
+				'status' => 422
+			], 422);
+		}
 
-    // Send an internal API request to get an access token
-    $data = [
-        'grant_type' => 'password',
-        'client_id' => env('CLIENT_ID'),
-				'client_secret' => env('CLIENT_SECRET'),
-        'username' => request('email'),
-        'password' => request('password'),
-    ];
+		$client = DB::table('oauth_clients')
+			->where('password_client', true)
+			->first();
+			
+		if (!$client) {
+			return response()->json([
+					'message' => 'Wrong configuration.',
+					'status' => 500
+			], 500);
+		}	
 
-    $request = Request::create('/oauth/token', 'POST', $data);
+		// Send an internal API request to get an access token
+		$data = [
+			'grant_type' => 'password',
+			'client_id' => $client->id,
+			'client_secret' => $client->secret,
+			'username' => request('email'),
+			'password' => request('password'),
+		];
 
-    $response = app()->handle($request);
+		$request = Request::create('/oauth/token', 'POST', $data);
 
-    // Check if the request was successful
-    if ($response->getStatusCode() != 200) {
-        return response()->json([
-            'message' => 'Wrong email or password',
-            'status' => 422
-        ], 422);
-    }
+		$response = app()->handle($request);
 
-    // Get the data from the response
-    $data = json_decode($response->getContent());
+		// Check if the request was successful
+		if ($response->getStatusCode() != 200) {
+			return response()->json([
+				'message' => 'Wrong email or password',
+				'status' => 422
+			], 422);
+		}
 
-    // Format the final response in a desirable format
-    return response()->json([
-        'token' => $data->access_token,
-        'user' => $user,
-        'status' => 200
-		], 200);
+		// Get the data from the response
+		$data = json_decode($response->getContent());
+
+		// Format the final response in a desirable format
+		return response()->json([
+			'token' => $data->access_token,
+			'user' => $user,
+			'status' => 200
+			], 200);
 	}
 
 	// check user

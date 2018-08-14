@@ -13,7 +13,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
-export default {
+export default { 
   name: 'header-dropdown',
   data: () => {
     return { itemsCount: 42 }
