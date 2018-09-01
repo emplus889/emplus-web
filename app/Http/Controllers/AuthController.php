@@ -131,26 +131,24 @@ class AuthController extends Controller
 
 		$response = app()->handle($request);
 
-		return $response;
+		// Check if the request was successful
+		if ($response->getStatusCode() != 200) {
+			return response()->json([
+				'message' => 'Wrong email or password',
+				'status' => 422
+			], 422);
+		}
 
-		// // Check if the request was successful
-		// if ($response->getStatusCode() != 200) {
-		// 	return response()->json([
-		// 		'message' => 'Wrong email or password',
-		// 		'status' => 422
-		// 	], 422);
-		// }
-
-		// // Get the data from the response
-		// $data = json_decode($response->getContent());
+		// Get the data from the response
+		$data = json_decode($response->getContent());
 		
 
-		// // Format the final response in a desirable format
-		// return response()->json([
-		// 	'token' => $data->access_token,
-		// 	'user' => $user,
-		// 	'status' => 200
-		// 	], 200);
+		// Format the final response in a desirable format
+		return response()->json([
+			'token' => $data->access_token,
+			'user' => $user,
+			'status' => 200
+			], 200);
 	}
 
 	// check user
