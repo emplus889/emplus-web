@@ -12133,10 +12133,10 @@ var api_url = '';
 
 switch ("development") {
   case 'development':
-    api_url = 'https://emplus-web.test/api/v1';
+    api_url = 'https://emplus-web.herokuapp.com/api/v1';
     break;
   case 'production':
-    api_url = 'https://emplus-web.test/api/v1'; //TODO: change with production url
+    api_url = 'https://emplus-web.herokuapp.com/api/v1'; //TODO: change with production url
     break;
 }
 
