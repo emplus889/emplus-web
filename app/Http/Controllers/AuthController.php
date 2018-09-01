@@ -56,7 +56,7 @@ class AuthController extends Controller
 			'grant_type' => 'password',
 			'client_id' => $client->id,
 			'client_secret' => $client->secret,
-			'email' => request('email'),
+			'username' => request('email'),
 			'password' => request('password'),
 		];
 
@@ -121,13 +121,16 @@ class AuthController extends Controller
 			'grant_type' => 'password',
 			'client_id' => $client->id,
 			'client_secret' => $client->secret,
-			'email' => request('email'),
+			'username' => request('email'),
 			'password' => request('password'),
 		];
 
 		$request = Request::create('/oauth/token', 'POST', $data);
 
 		$response = app()->handle($request);
+
+		return $response;
+		
 
 		// Check if the request was successful
 		if ($response->getStatusCode() != 200) {
