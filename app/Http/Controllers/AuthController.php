@@ -105,6 +105,8 @@ class AuthController extends Controller
 			], 422);
 		}
 
+		Auth::attempt(array('email' => request('email'), 'password' => request('password')));
+
 		$client = DB::table('oauth_clients')
 			->where('password_client', true)
 			->first();
@@ -128,9 +130,6 @@ class AuthController extends Controller
 		$request = Request::create('/oauth/token', 'POST', $data);
 
 		$response = app()->handle($request);
-
-		return $response;
-		
 
 		// Check if the request was successful
 		if ($response->getStatusCode() != 200) {
