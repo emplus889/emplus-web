@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 Route::post('/register', 'AuthController@register');
 Route::post('/login', 'AuthController@login');
 
-Route::group(['prefix'=>'v1','middleware' => ['auth:api','cors']], function(){
+Route::group(['prefix'=>'v1','middleware' => ['auth:api']], function(){
     
     // auth
     Route::group(['prefix'=>'auth'], function(){
