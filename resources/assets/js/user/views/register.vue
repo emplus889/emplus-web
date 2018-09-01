@@ -69,14 +69,8 @@
             </b-card-body>
             <b-card-footer class="p-4">
               <b-row>
-                <b-col cols="4">
+                <b-col cols="12">
                   <b-link class="btn btn-danger btn-block" to="/user/login"><span>< back</span></b-link>
-                </b-col>
-                <b-col cols="4">
-                  <b-button block class="btn btn-facebook"><span>facebook</span></b-button>
-                </b-col>
-                <b-col cols="4">
-                  <b-button block class="btn btn-twitter" type="button"><span>twitter</span></b-button>
                 </b-col>
               </b-row>
             </b-card-footer>

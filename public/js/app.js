@@ -58390,12 +58390,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -58807,7 +58801,7 @@ var render = function() {
                                 [
                                   _c(
                                     "b-col",
-                                    { attrs: { cols: "4" } },
+                                    { attrs: { cols: "12" } },
                                     [
                                       _c(
                                         "b-link",
@@ -58817,38 +58811,6 @@ var render = function() {
                                           attrs: { to: "/user/login" }
                                         },
                                         [_c("span", [_vm._v("< back")])]
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "b-col",
-                                    { attrs: { cols: "4" } },
-                                    [
-                                      _c(
-                                        "b-button",
-                                        {
-                                          staticClass: "btn btn-facebook",
-                                          attrs: { block: "" }
-                                        },
-                                        [_c("span", [_vm._v("facebook")])]
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "b-col",
-                                    { attrs: { cols: "4" } },
-                                    [
-                                      _c(
-                                        "b-button",
-                                        {
-                                          staticClass: "btn btn-twitter",
-                                          attrs: { block: "", type: "button" }
-                                        },
-                                        [_c("span", [_vm._v("twitter")])]
                                       )
                                     ],
                                     1
